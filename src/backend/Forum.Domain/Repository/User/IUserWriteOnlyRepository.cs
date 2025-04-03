@@ -1,6 +1,6 @@
 ﻿namespace Forum.Domain.Repository.User
 {
-    public interface IUserRepository
+    public interface IUserWriteOnlyRepository
     {
         Task Add(Entities.User user);
     }

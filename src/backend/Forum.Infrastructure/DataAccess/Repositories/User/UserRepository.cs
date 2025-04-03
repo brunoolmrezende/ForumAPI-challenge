@@ -2,7 +2,7 @@
 
 namespace Forum.Infrastructure.DataAccess.Repositories.User
 {
-    public class UserRepository(ForumDbContext dbContext) : IUserRepository
+    public class UserRepository(ForumDbContext dbContext) : IUserWriteOnlyRepository
     {
         private readonly ForumDbContext _dbContext = dbContext;
 
