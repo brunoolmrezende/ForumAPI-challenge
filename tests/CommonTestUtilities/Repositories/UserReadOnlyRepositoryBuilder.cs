@@ -1,4 +1,5 @@
-﻿using Forum.Domain.Repository.User;
+﻿using Forum.Domain.Entities;
+using Forum.Domain.Repository.User;
 using Moq;
 
 namespace CommonTestUtilities.Repositories
@@ -14,6 +15,13 @@ namespace CommonTestUtilities.Repositories
             {
                 _mock.Setup(repository => repository.ExistActiveUserWithEmail(email)).ReturnsAsync(true);
             }
+
+            return this;
+        }
+
+        public UserReadOnlyRepositoryBuilder GetByEmail(User user)
+        {
+            _mock.Setup(repository => repository.GetByEmail(user.Email)).ReturnsAsync(user);
 
             return this;
         }
