@@ -4,7 +4,7 @@ using Forum.Domain.Repository.User;
 using Forum.Domain.Security.Cryptography;
 using Forum.Infrastructure.Cryptography;
 using Forum.Infrastructure.DataAccess;
-using Forum.Infrastructure.DataAccess.Repositories.User;
+using Forum.Infrastructure.DataAccess.Repositories;
 using Forum.Infrastructure.Extensions;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
@@ -36,6 +36,7 @@ namespace Forum.Infrastructure
         private static void AddRepositories(this IServiceCollection services)
         {
             services.AddScoped<IUserWriteOnlyRepository, UserRepository>();
+            services.AddScoped<IUserReadOnlyRepository, UserRepository>();
 
             services.AddScoped<IUnitOfWork, UnitOfWork>();
         }

@@ -1,34 +1,38 @@
 ﻿using AutoMapper;
+using FluentValidation.Results;
 using Forum.Communication.Request;
 using Forum.Communication.Response;
 using Forum.Domain.Repository;
 using Forum.Domain.Repository.User;
 using Forum.Domain.Security.Cryptography;
+using Forum.Exceptions;
 using Forum.Exceptions.ExceptionBase;
 
 namespace Forum.Application.UseCases.User.Register
 {
     public class RegisterUserUseCase(
         IMapper mapper,
-        IUserWriteOnlyRepository userRepository,
+        IUserWriteOnlyRepository userWriteOnlyRepository,
         IPasswordEncryption encryption,
-        IUnitOfWork unitOfWork) : IRegisterUserUseCase
+        IUnitOfWork unitOfWork,
+        IUserReadOnlyRepository userReadOlyRepository) : IRegisterUserUseCase
     {
         private readonly IMapper _mapper = mapper;
-        private readonly IUserWriteOnlyRepository _userRepository = userRepository;
+        private readonly IUserWriteOnlyRepository _userWriteOnlyRepository = userWriteOnlyRepository;
         private readonly IPasswordEncryption _encryption = encryption;
         private readonly IUnitOfWork _unitOfWork = unitOfWork;
+        private readonly IUserReadOnlyRepository _userReadOnlyRepository = userReadOlyRepository;
 
         public async Task<ResponseRegisteredUserJson> Execute(RequestRegisterUserJson request)
         {
-            Validate(request);
+            await Validate(request);
 
             var user = _mapper.Map<Domain.Entities.User>(request);
 
             user.Password = _encryption.Encrypt(user.Password);
             user.UserIdentifier = Guid.NewGuid();
 
-            await _userRepository.Add(user);
+            await _userWriteOnlyRepository.Add(user);
             await _unitOfWork.Commit();
 
             return new ResponseRegisteredUserJson
@@ -37,11 +41,18 @@ namespace Forum.Application.UseCases.User.Register
             };
         }
 
-        private static void Validate(RequestRegisterUserJson request)
+        private async Task Validate(RequestRegisterUserJson request)
         {
             var validator = new RegisterUserValidator();
 
             var result = validator.Validate(request);
+
+            var emailAlreadyRegistered = await _userReadOnlyRepository.ExistActiveUserWithEmail(request.Email);
+
+            if (emailAlreadyRegistered)
+            {
+                result.Errors.Add(new ValidationFailure("error already registered", ResourceMessagesException.EMAIL_ALREADY_REGISTERED));
+            }
 
             if (!result.IsValid)
             {
