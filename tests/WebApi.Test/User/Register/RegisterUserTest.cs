@@ -10,7 +10,7 @@ namespace WebApi.Test.User.Register
 {
     public class RegisterUserTest : ForumClassFixture
     {
-        private readonly string _endpoint = "User";
+        private readonly string _endpoint = "user";
 
         public RegisterUserTest(CustomWebApplicationFactory factory) : base(factory)
         {

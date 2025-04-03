@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using Forum.Application.Services.AutoMapper;
+using Forum.Application.UseCases.Login.DoLogin;
 using Forum.Application.UseCases.User.Register;
 using Microsoft.Extensions.DependencyInjection;
 
@@ -16,6 +17,7 @@ namespace Forum.Application
         private static void AddUseCases(this IServiceCollection services)
         {
             services.AddScoped<IRegisterUserUseCase, RegisterUserUseCase>();
+            services.AddScoped<IDoLoginUseCase, DoLoginUseCase>();
         }
 
         private static void AddAutoMapper(this IServiceCollection services)
