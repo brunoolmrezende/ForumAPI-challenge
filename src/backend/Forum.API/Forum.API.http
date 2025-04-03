@@ -1,0 +1,6 @@
+@Forum.API_HostAddress = http://localhost:5167
+
+GET {{Forum.API_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###
