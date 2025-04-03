@@ -1,4 +1,7 @@
+using Forum.Infrastructure;
+using Forum.Infrastructure.DataAccess.Migrations;
 using Forum.Infrastructure.Extensions;
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
@@ -25,4 +28,20 @@ app.UseAuthorization();
 
 app.MapControllers();
 
+MigrateDatabase();
+
 app.Run();
+
+void MigrateDatabase()
+{
+    if (builder.Configuration.IsUnitTestEnviroment())
+    {
+        return;
+    }
+
+    var connectionString = builder.Configuration.ConnectionString();
+
+    var serviceScope = app.Services.GetRequiredService<IServiceScopeFactory>().CreateScope();
+
+    DatabaseMigration.Migrate(connectionString, serviceScope.ServiceProvider);
+}
