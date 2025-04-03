@@ -1,3 +1,5 @@
+using Forum.API.Filters;
+using Forum.API.Middleware;
 using Forum.Application;
 using Forum.Infrastructure;
 using Forum.Infrastructure.DataAccess.Migrations;
@@ -12,6 +14,8 @@ builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
+builder.Services.AddMvc(options => options.Filters.Add(typeof(ExceptionFilters)));
+
 builder.Services.AddInfrastructure(builder.Configuration);
 builder.Services.AddApplication();
 
@@ -23,6 +27,8 @@ if (app.Environment.IsDevelopment())
     app.UseSwagger();
     app.UseSwaggerUI();
 }
+
+app.UseMiddleware<CultureMiddleware>();
 
 app.UseHttpsRedirection();
 

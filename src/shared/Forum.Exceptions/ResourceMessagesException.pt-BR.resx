@@ -132,4 +132,7 @@
   <data name="PASSWORD_LENGTH" xml:space="preserve">
     <value>A senha deve ter pelo menos 8 caracteres.</value>
   </data>
+  <data name="UNKNOWN_ERROR" xml:space="preserve">
+    <value>Erro desconhecido.</value>
+  </data>
 </root>
