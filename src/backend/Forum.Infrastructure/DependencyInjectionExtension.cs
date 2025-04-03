@@ -13,6 +13,7 @@ namespace Forum.Infrastructure
         public static void AddInfrastructure(this IServiceCollection services, IConfiguration configuration)
         {
             AddDbContext(services, configuration);
+            AddFluentMigrator(services, configuration);
         }
 
         private static void AddDbContext(this IServiceCollection services, IConfiguration configuration)
@@ -22,6 +23,19 @@ namespace Forum.Infrastructure
             services.AddDbContext<ForumDbContext>(dbContextOptions =>
             {
                 dbContextOptions.UseSqlServer(connectionString);
+            });
+        }
+
+        private static void AddFluentMigrator(IServiceCollection services, IConfiguration configuration)
+        {
+            var connectionString = configuration.ConnectionString();
+
+            services.AddFluentMigratorCore().ConfigureRunner(options =>
+            {
+                options
+                .AddSqlServer()
+                .WithGlobalConnectionString(connectionString)
+                .ScanIn(Assembly.Load("Forum.Infrastructure")).For.All();
             });
         }
     }
