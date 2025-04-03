@@ -15,13 +15,13 @@ namespace Forum.Application.UseCases.User.Register
         IUserWriteOnlyRepository userWriteOnlyRepository,
         IPasswordEncryption encryption,
         IUnitOfWork unitOfWork,
-        IUserReadOnlyRepository userReadOlyRepository) : IRegisterUserUseCase
+        IUserReadOnlyRepository userReadOnlyRepository) : IRegisterUserUseCase
     {
         private readonly IMapper _mapper = mapper;
         private readonly IUserWriteOnlyRepository _userWriteOnlyRepository = userWriteOnlyRepository;
         private readonly IPasswordEncryption _encryption = encryption;
         private readonly IUnitOfWork _unitOfWork = unitOfWork;
-        private readonly IUserReadOnlyRepository _userReadOnlyRepository = userReadOlyRepository;
+        private readonly IUserReadOnlyRepository _userReadOnlyRepository = userReadOnlyRepository;
 
         public async Task<ResponseRegisteredUserJson> Execute(RequestRegisterUserJson request)
         {

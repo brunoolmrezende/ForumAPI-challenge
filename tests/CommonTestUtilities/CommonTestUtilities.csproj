@@ -9,10 +9,12 @@
   <ItemGroup>
     <PackageReference Include="AutoMapper" Version="14.0.0" />
     <PackageReference Include="Bogus" Version="35.6.2" />
+    <PackageReference Include="Moq" Version="4.20.72" />
   </ItemGroup>
 
   <ItemGroup>
     <ProjectReference Include="..\..\src\backend\Forum.Application\Forum.Application.csproj" />
+    <ProjectReference Include="..\..\src\backend\Forum.Infrastructure\Forum.Infrastructure.csproj" />
     <ProjectReference Include="..\..\src\shared\Forum.Communication\Forum.Communication.csproj" />
   </ItemGroup>
 
