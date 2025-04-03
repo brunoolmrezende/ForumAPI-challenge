@@ -17,8 +17,12 @@ namespace Forum.Infrastructure
     {
         public static void AddInfrastructure(this IServiceCollection services, IConfiguration configuration)
         {
-            AddDbContext(services, configuration);
-            AddFluentMigrator(services, configuration);
+            if (!configuration.IsUnitTestEnviroment())
+            {
+                AddDbContext(services, configuration);
+                AddFluentMigrator(services, configuration);
+            }
+
             AddRepositories(services);
             AddPasswordEncrypter(services);
         }
