@@ -4,6 +4,7 @@ using Forum.Communication.Response;
 using Forum.Domain.Repository;
 using Forum.Domain.Repository.User;
 using Forum.Domain.Security.Cryptography;
+using Forum.Exceptions.ExceptionBase;
 
 namespace Forum.Application.UseCases.User.Register
 {
@@ -36,7 +37,7 @@ namespace Forum.Application.UseCases.User.Register
             };
         }
 
-        private void Validate(RequestRegisterUserJson request)
+        private static void Validate(RequestRegisterUserJson request)
         {
             var validator = new RegisterUserValidator();
 
@@ -44,7 +45,9 @@ namespace Forum.Application.UseCases.User.Register
 
             if (!result.IsValid)
             {
-                throw new Exception("Erro de validação");
+                var errors = result.Errors.Select(error => error.ErrorMessage).ToList();
+
+                throw new ErrorOnValidationException(errors);
             }
         }
     }
