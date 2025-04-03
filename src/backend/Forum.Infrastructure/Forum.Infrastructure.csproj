@@ -6,4 +6,5 @@
     <Nullable>enable</Nullable>
   </PropertyGroup>
 
+    <PackageReference Include="Microsoft.EntityFrameworkCore" Version="8.0.14" />
 </Project>
