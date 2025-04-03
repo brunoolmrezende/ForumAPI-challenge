@@ -1,3 +1,4 @@
+using Forum.Application;
 using Forum.Infrastructure;
 using Forum.Infrastructure.DataAccess.Migrations;
 using Forum.Infrastructure.Extensions;
@@ -12,6 +13,7 @@ builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
 builder.Services.AddInfrastructure(builder.Configuration);
+builder.Services.AddApplication();
 
 var app = builder.Build();
 

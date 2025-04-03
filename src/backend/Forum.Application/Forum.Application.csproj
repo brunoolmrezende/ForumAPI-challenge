@@ -6,4 +6,15 @@
     <Nullable>enable</Nullable>
   </PropertyGroup>
 
+  <ItemGroup>
+    <PackageReference Include="AutoMapper" Version="14.0.0" />
+    <PackageReference Include="FluentValidation" Version="11.11.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\shared\Forum.Communication\Forum.Communication.csproj" />
+    <ProjectReference Include="..\..\shared\Forum.Exceptions\Forum.Exceptions.csproj" />
+    <ProjectReference Include="..\Forum.Domain\Forum.Domain.csproj" />
+  </ItemGroup>
+
 </Project>
