@@ -6,7 +6,7 @@ using System.Text;
 
 namespace Forum.Infrastructure.Security.AccessToken
 {
-    public class AccessTokenGenerator(uint expirationTimeMinutes, string signinKey) : IAccessTokenGenerator
+    public class AccessTokenGenerator(uint expirationTimeMinutes, string signinKey) : JwtTokenHandler, IAccessTokenGenerator
     {
         private readonly uint _expirationTimeMinutes = expirationTimeMinutes;
         private readonly string _signinKey = signinKey;
@@ -22,7 +22,7 @@ namespace Forum.Infrastructure.Security.AccessToken
             {
                 Subject = new ClaimsIdentity(claims),
                 Expires = DateTime.UtcNow.AddMinutes(_expirationTimeMinutes),
-                SigningCredentials = new SigningCredentials(SecurityKey(), SecurityAlgorithms.HmacSha256Signature),
+                SigningCredentials = new SigningCredentials(SecurityKey(_signinKey), SecurityAlgorithms.HmacSha256Signature),
             };
 
             var tokenHandler = new JwtSecurityTokenHandler();
@@ -30,12 +30,6 @@ namespace Forum.Infrastructure.Security.AccessToken
             var securityToken = tokenHandler.CreateToken(tokenDescriptor);
 
             return tokenHandler.WriteToken(securityToken);
-        }
-
-        private SymmetricSecurityKey SecurityKey()
-        {
-            var bytes = Encoding.UTF8.GetBytes(_signinKey);
-            return new SymmetricSecurityKey(bytes);
         }
     }
 }

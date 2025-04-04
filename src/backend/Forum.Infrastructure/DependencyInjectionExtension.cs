@@ -61,6 +61,7 @@ namespace Forum.Infrastructure
             var signinKey = configuration.GetValue<string>("Settings:Jwt:SigninKey")!;
 
             services.AddScoped<IAccessTokenGenerator>(options => new AccessTokenGenerator(expirationTimeMinutes, signinKey));
+            services.AddScoped<IAccessTokenValidator>(options => new AccessTokenValidator(signinKey));
         }
 
         private static void AddFluentMigrator(IServiceCollection services, IConfiguration configuration)
