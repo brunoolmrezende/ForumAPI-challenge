@@ -30,6 +30,7 @@ namespace WebApi.Test.User.Register
             var responseData = await JsonDocument.ParseAsync(responseBody);
 
             responseData.RootElement.GetProperty("name").GetString().Should().Be(request.Name);
+            responseData.RootElement.GetProperty("tokens").GetProperty("accessToken").GetString().Should().NotBeNullOrEmpty();
         }
 
         [Theory]

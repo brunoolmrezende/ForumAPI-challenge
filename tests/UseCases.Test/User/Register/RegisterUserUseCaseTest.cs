@@ -2,6 +2,7 @@
 using CommonTestUtilities.Cryptography;
 using CommonTestUtilities.Repositories;
 using CommonTestUtilities.Requests;
+using CommonTestUtilities.Tokens;
 using FluentAssertions;
 using Forum.Application.UseCases.User.Register;
 using Forum.Exceptions;
@@ -22,6 +23,7 @@ namespace UseCases.Test.User.Register
 
             result.Should().NotBeNull();
             result.Name.Should().Be(request.Name);
+            result.Tokens.AccessToken.Should().NotBeNullOrEmpty();
         }
 
         [Fact]
@@ -66,7 +68,9 @@ namespace UseCases.Test.User.Register
                 userReadOnlyRepository.ExistActiveUserWithEmail(email);
             }
 
-            return new RegisterUserUseCase(mapper, userWriteOnlyRepository, encryption, unitOfWork, userReadOnlyRepository.Build());
+            var accessToken = AccessTokenGeneratorBuilder.Build();
+
+            return new RegisterUserUseCase(mapper, userWriteOnlyRepository, encryption, unitOfWork, userReadOnlyRepository.Build(), accessToken);
         }
     }
 }

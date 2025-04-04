@@ -1,6 +1,7 @@
 ﻿using Forum.Communication.Request;
 using Forum.Communication.Response;
 using Forum.Domain.Repository.User;
+using Forum.Domain.Security.AccessToken;
 using Forum.Domain.Security.Cryptography;
 using Forum.Exceptions.ExceptionBase;
 
@@ -8,10 +9,12 @@ namespace Forum.Application.UseCases.Login.DoLogin
 {
     public class DoLoginUseCase(
         IUserReadOnlyRepository readOnlyRepository,
-        IPasswordEncryption encryption) : IDoLoginUseCase
+        IPasswordEncryption encryption,
+        IAccessTokenGenerator accessToken) : IDoLoginUseCase
     {
         private readonly IUserReadOnlyRepository _readOnlyRepository = readOnlyRepository;
         private readonly IPasswordEncryption _encryption = encryption;
+        private readonly IAccessTokenGenerator _accessToken = accessToken;
 
         public async Task<ResponseRegisteredUserJson> Execute(RequestDoLoginJson request)
         {
@@ -25,6 +28,10 @@ namespace Forum.Application.UseCases.Login.DoLogin
             return new ResponseRegisteredUserJson
             {
                 Name = user.Name,
+                Tokens = new ResponseTokensJson
+                {
+                    AccessToken = _accessToken.Generate(user.UserIdentifier),
+                }
             };
         }
     }

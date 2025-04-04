@@ -1,5 +1,5 @@
 ﻿using Forum.Domain.Security.Cryptography;
-using Forum.Infrastructure.Cryptography;
+using Forum.Infrastructure.Security.Cryptography;
 
 namespace CommonTestUtilities.Cryptography
 {
