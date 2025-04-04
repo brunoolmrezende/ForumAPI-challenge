@@ -18,6 +18,11 @@ namespace Forum.Infrastructure.DataAccess.Repositories
             return await _dbContext.Users.AnyAsync(user => user.Email.Equals(email) && user.Active);
         }
 
+        public async Task<bool> ExistActiveUserWithIdentifier(Guid userIdentifier)
+        {
+            return await _dbContext.Users.AnyAsync(user => user.UserIdentifier.Equals(userIdentifier) && user.Active);
+        }
+
         public async Task<User?> GetByEmail(string email)
         {
             return await _dbContext.Users.AsNoTracking().FirstOrDefaultAsync(user => user.Email.Equals(email) && user.Active);
