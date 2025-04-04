@@ -2,6 +2,7 @@
 using CommonTestUtilities.Entities;
 using CommonTestUtilities.Repositories;
 using CommonTestUtilities.Requests;
+using CommonTestUtilities.Tokens;
 using FluentAssertions;
 using Forum.Application.UseCases.Login.DoLogin;
 using Forum.Communication.Request;
@@ -27,6 +28,7 @@ namespace UseCases.Test.Login.DoLogin
 
             result.Should().NotBeNull();
             result.Name.Should().Be(user.Name);
+            result.Tokens.AccessToken.Should().NotBeNullOrEmpty();
         }
 
         [Fact]
@@ -51,7 +53,9 @@ namespace UseCases.Test.Login.DoLogin
                 readOnlyRepository.GetByEmail(user);
             }
 
-            return new DoLoginUseCase(readOnlyRepository.Build(), encryption);
+            var accessToken = AccessTokenGeneratorBuilder.Build();
+
+            return new DoLoginUseCase(readOnlyRepository.Build(), encryption, accessToken);
         }
     }
 }

@@ -4,6 +4,7 @@ using Forum.Communication.Request;
 using Forum.Communication.Response;
 using Forum.Domain.Repository;
 using Forum.Domain.Repository.User;
+using Forum.Domain.Security.AccessToken;
 using Forum.Domain.Security.Cryptography;
 using Forum.Exceptions;
 using Forum.Exceptions.ExceptionBase;
@@ -15,13 +16,15 @@ namespace Forum.Application.UseCases.User.Register
         IUserWriteOnlyRepository userWriteOnlyRepository,
         IPasswordEncryption encryption,
         IUnitOfWork unitOfWork,
-        IUserReadOnlyRepository userReadOnlyRepository) : IRegisterUserUseCase
+        IUserReadOnlyRepository userReadOnlyRepository,
+        IAccessTokenGenerator accessToken) : IRegisterUserUseCase
     {
         private readonly IMapper _mapper = mapper;
         private readonly IUserWriteOnlyRepository _userWriteOnlyRepository = userWriteOnlyRepository;
         private readonly IPasswordEncryption _encryption = encryption;
         private readonly IUnitOfWork _unitOfWork = unitOfWork;
         private readonly IUserReadOnlyRepository _userReadOnlyRepository = userReadOnlyRepository;
+        private readonly IAccessTokenGenerator _accessToken = accessToken;
 
         public async Task<ResponseRegisteredUserJson> Execute(RequestRegisterUserJson request)
         {
@@ -38,6 +41,10 @@ namespace Forum.Application.UseCases.User.Register
             return new ResponseRegisteredUserJson
             {
                 Name = user.Name,
+                Tokens = new ResponseTokensJson
+                {
+                    AccessToken = _accessToken.Generate(user.UserIdentifier),
+                }
             };
         }
 

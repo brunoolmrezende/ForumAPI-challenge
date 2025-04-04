@@ -8,7 +8,7 @@ namespace Forum.Infrastructure.DataAccess.Repositories
     {
         private readonly ForumDbContext _dbContext = dbContext;
 
-        public async Task Add(Domain.Entities.User user)
+        public async Task Add(User user)
         {
             await _dbContext.Users.AddAsync(user);
         }
