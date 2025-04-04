@@ -1,7 +1,9 @@
 using Forum.API.Converters;
 using Forum.API.Filters;
 using Forum.API.Middleware;
+using Forum.API.Token;
 using Forum.Application;
+using Forum.Domain.Security.AccessToken;
 using Forum.Infrastructure;
 using Forum.Infrastructure.DataAccess.Migrations;
 using Forum.Infrastructure.Extensions;
@@ -23,8 +25,11 @@ builder.Services.AddMvc(options => options.Filters.Add(typeof(ExceptionFilters))
 
 builder.Services.AddInfrastructure(builder.Configuration);
 builder.Services.AddApplication();
+builder.Services.AddScoped<ITokenProvider, HttpContextTokenValue>();
 
 builder.Services.AddRouting(options => options.LowercaseUrls =  true);
+
+builder.Services.AddHttpContextAccessor();
 
 var app = builder.Build();
 
