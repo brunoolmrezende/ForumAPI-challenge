@@ -8,7 +8,7 @@ namespace Forum.API.Token
 
         public string Value()
         {
-            var authentication = _httpContextAccessor.HttpContext!.Response.Headers.Authorization.ToString();
+            var authentication = _httpContextAccessor.HttpContext!.Request.Headers.Authorization.ToString();
 
             return authentication["Bearer ".Length..].Trim();
         }
