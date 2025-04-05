@@ -31,7 +31,7 @@ namespace WebApi.Test
 
         private void AuthorizeRequest(string token)
         {
-            if (token is null)
+            if (string.IsNullOrWhiteSpace(token))
             {
                 return;
             }
