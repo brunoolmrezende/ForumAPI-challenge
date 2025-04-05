@@ -7,17 +7,11 @@ using System.Net;
 using System.Text.Json;
 using WebApi.Test.InlineData;
 
-namespace WebApi.Test.Topic.Update
+namespace WebApi.Test.Topic.Register
 {
-    public class UpdateTopicInvalidTokenTest : ForumClassFixture
+    public class ResgisterTopicInvalidTokenTest(CustomWebApplicationFactory factory) : ForumClassFixture(factory)
     {
         private const string _endpoint = "topic";
-        private readonly long _topicId;
-
-        public UpdateTopicInvalidTokenTest(CustomWebApplicationFactory factory) : base(factory)
-        {
-            _topicId = factory.GetTopicId();
-        }
 
         [Theory]
         [ClassData(typeof(CultureInlineDataTest))]
@@ -25,7 +19,7 @@ namespace WebApi.Test.Topic.Update
         {
             var request = RequestTopicJsonBuilder.Build();
 
-            var response = await DoPut(endpoint: $"{_endpoint}/{_topicId}", request: request, token: string.Empty, culture: culture);
+            var response = await DoPost(endpoint: _endpoint, request: request, token: string.Empty, culture: culture);
 
             response.StatusCode.Should().Be(HttpStatusCode.Unauthorized);
 
@@ -46,7 +40,7 @@ namespace WebApi.Test.Topic.Update
         {
             var request = RequestTopicJsonBuilder.Build();
 
-            var response = await DoPut(endpoint: $"{_endpoint}/{_topicId}", request: request, token: "invalidToken", culture: culture);
+            var response = await DoPost(endpoint: _endpoint, request: request, token: "invalidToken", culture: culture);
 
             response.StatusCode.Should().Be(HttpStatusCode.Unauthorized);
 
@@ -69,7 +63,7 @@ namespace WebApi.Test.Topic.Update
 
             var token = AccessTokenGeneratorBuilder.Build().Generate(Guid.NewGuid());
 
-            var response = await DoPut(endpoint: $"{_endpoint}/{_topicId}", request: request, token: token, culture: culture);
+            var response = await DoPost(endpoint: _endpoint, request: request, token: token, culture: culture);
 
             response.StatusCode.Should().Be(HttpStatusCode.Unauthorized);
 
