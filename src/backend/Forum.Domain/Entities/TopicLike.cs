@@ -1,6 +1,6 @@
 ﻿namespace Forum.Domain.Entities
 {
-    public class TopicLike
+    public class TopicLike : EntityBase
     {
         public long UserId { get; set; }
         public long TopicId { get; set; }
