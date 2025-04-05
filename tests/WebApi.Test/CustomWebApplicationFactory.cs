@@ -10,6 +10,7 @@ namespace WebApi.Test
     public class CustomWebApplicationFactory : WebApplicationFactory<Program>
     {
         private Forum.Domain.Entities.User _user = default!;
+        private Forum.Domain.Entities.Topic _topic = default!;
         private string _password = string.Empty;
 
         protected override void ConfigureWebHost(IWebHostBuilder builder)
@@ -46,12 +47,17 @@ namespace WebApi.Test
         public string GetPassword() => _password;
         public Guid GetIdentifier() => _user.UserIdentifier;
 
+        public long GetTopicId() => _topic.Id;
+
         private void StartDatabase(ForumDbContext dbContext)
         {
             (_user, _password) = UserBuilder.Build();
 
+            _topic = TopicBuilder.Build(_user);
+
             dbContext.Database.EnsureCreated();
             dbContext.Users.Add(_user);
+            dbContext.Topics.Add(_topic);
             dbContext.SaveChanges();
         }
     }
