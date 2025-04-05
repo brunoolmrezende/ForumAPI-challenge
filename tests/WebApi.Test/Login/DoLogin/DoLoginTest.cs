@@ -51,7 +51,7 @@ namespace WebApi.Test.Login.DoLogin
         {
             var request = RequestDoLoginJsonBuilder.Build();
 
-            var response = await DoPost(_endpoint, request, culture);
+            var response = await DoPost(endpoint: _endpoint, request: request, culture: culture);
 
             response.StatusCode.Should().Be(HttpStatusCode.Unauthorized);
 
