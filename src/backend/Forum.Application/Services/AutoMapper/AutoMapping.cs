@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using Forum.Communication.Request;
+using Forum.Communication.Response;
 using Forum.Domain.Entities;
 
 namespace Forum.Application.Services.AutoMapper
@@ -9,12 +10,20 @@ namespace Forum.Application.Services.AutoMapper
         public AutoMapping()
         {
             RequestToDomain();
+            DomainToResponse();
         }
 
         private void RequestToDomain()
         {
             CreateMap<RequestRegisterUserJson, User>()
                 .ForMember(dest => dest.Password, opt => opt.Ignore());
+
+            CreateMap<RequestRegisterTopicJson, Topic>();
+        }
+
+        private void DomainToResponse()
+        {
+            CreateMap<Topic, ResponseRegisteredTopicJson>();
         }
     }
 }

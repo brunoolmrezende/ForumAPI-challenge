@@ -1,13 +1,16 @@
 ﻿using FluentMigrator.Runner;
 using Forum.Domain.Repository;
+using Forum.Domain.Repository.Topic;
 using Forum.Domain.Repository.User;
 using Forum.Domain.Security.AccessToken;
 using Forum.Domain.Security.Cryptography;
+using Forum.Domain.Services;
 using Forum.Infrastructure.DataAccess;
 using Forum.Infrastructure.DataAccess.Repositories;
 using Forum.Infrastructure.Extensions;
 using Forum.Infrastructure.Security.AccessToken;
 using Forum.Infrastructure.Security.Cryptography;
+using Forum.Infrastructure.Services.LoggedUser;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -22,6 +25,7 @@ namespace Forum.Infrastructure
             AddRepositories(services);
             AddPasswordEncrypter(services);
             AddTokens(services, configuration);
+            AddLoggedUser(services);
 
             if (configuration.IsUnitTestEnviroment())
             {
@@ -47,6 +51,8 @@ namespace Forum.Infrastructure
             services.AddScoped<IUserWriteOnlyRepository, UserRepository>();
             services.AddScoped<IUserReadOnlyRepository, UserRepository>();
 
+            services.AddScoped<ITopicWriteOnlyRepository, TopicRepository>();
+
             services.AddScoped<IUnitOfWork, UnitOfWork>();
         }
 
@@ -62,6 +68,11 @@ namespace Forum.Infrastructure
 
             services.AddScoped<IAccessTokenGenerator>(options => new AccessTokenGenerator(expirationTimeMinutes, signinKey));
             services.AddScoped<IAccessTokenValidator>(options => new AccessTokenValidator(signinKey));
+        }
+
+        private static void AddLoggedUser(IServiceCollection services)
+        {
+            services.AddScoped<ILoggedUser, LoggedUser>();
         }
 
         private static void AddFluentMigrator(IServiceCollection services, IConfiguration configuration)
