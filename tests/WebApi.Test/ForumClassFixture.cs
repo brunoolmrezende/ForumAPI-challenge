@@ -11,9 +11,10 @@ namespace WebApi.Test
             _httpClient = factory.CreateClient();
         }
 
-        protected async Task<HttpResponseMessage> DoPost(string endpoint, object request, string culture = "en")
+        protected async Task<HttpResponseMessage> DoPost(string endpoint, object request, string token = "", string culture = "en")
         {
             ChangeRequestCulture(culture);
+            AuthorizeRequest(token);
 
             return await _httpClient.PostAsJsonAsync(endpoint, request);
         }
@@ -26,6 +27,16 @@ namespace WebApi.Test
             }
 
             _httpClient.DefaultRequestHeaders.Add("Accept-Language", culture);
+        }
+
+        private void AuthorizeRequest(string token)
+        {
+            if (token is null)
+            {
+                return;
+            }
+
+            _httpClient.DefaultRequestHeaders.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", token);
         }
     }
 }

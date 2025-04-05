@@ -44,6 +44,7 @@ namespace WebApi.Test
         public string GetName() => _user.Name;
         public string GetEmail() => _user.Email;
         public string GetPassword() => _password;
+        public Guid GetIdentifier() => _user.UserIdentifier;
 
         private void StartDatabase(ForumDbContext dbContext)
         {
