@@ -4,6 +4,7 @@ using Forum.Communication.Response;
 using Forum.Domain.Repository;
 using Forum.Domain.Repository.Topic;
 using Forum.Domain.Services;
+using Forum.Exceptions.ExceptionBase;
 
 namespace Forum.Application.UseCases.Topic.Register
 {
@@ -20,6 +21,8 @@ namespace Forum.Application.UseCases.Topic.Register
 
         public async Task<ResponseRegisteredTopicJson> Execute(RequestRegisterTopicJson request)
         {
+            Validate(request);
+
             var loggedUser = await _loggedUser.User();
 
             var topic = _mapper.Map<Domain.Entities.Topic>(request);
@@ -29,6 +32,20 @@ namespace Forum.Application.UseCases.Topic.Register
             await _unitOfWork.Commit();
 
             return _mapper.Map<ResponseRegisteredTopicJson>(topic);
+        }
+
+        private static void Validate(RequestRegisterTopicJson request)
+        {
+            var validator = new RegisterTopicValidator();
+
+            var result = validator.Validate(request);
+
+            if (!result.IsValid)
+            {
+                var errors = result.Errors.Select(error => error.ErrorMessage).ToList();
+
+                throw new ErrorOnValidationException(errors);
+            }       
         }
     }
 }

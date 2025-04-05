@@ -61,6 +61,24 @@ namespace Forum.Exceptions {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to The content cannot be empty..
+        /// </summary>
+        public static string CONTENT_EMPTY {
+            get {
+                return ResourceManager.GetString("CONTENT_EMPTY", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to The content must be at most 2000 characters long..
+        /// </summary>
+        public static string CONTENT_MAX_LENGTH {
+            get {
+                return ResourceManager.GetString("CONTENT_MAX_LENGTH", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to The e-mail is already registered..
         /// </summary>
         public static string EMAIL_ALREADY_REGISTERED {
@@ -129,6 +147,24 @@ namespace Forum.Exceptions {
         public static string PASSWORD_LENGTH {
             get {
                 return ResourceManager.GetString("PASSWORD_LENGTH", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to The title cannot be empty..
+        /// </summary>
+        public static string TITLE_EMPTY {
+            get {
+                return ResourceManager.GetString("TITLE_EMPTY", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to The title must be at most 255 characters long..
+        /// </summary>
+        public static string TITLE_MAX_LENGTH {
+            get {
+                return ResourceManager.GetString("TITLE_MAX_LENGTH", resourceCulture);
             }
         }
         

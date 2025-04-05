@@ -117,6 +117,12 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="CONTENT_EMPTY" xml:space="preserve">
+    <value>The content cannot be empty.</value>
+  </data>
+  <data name="CONTENT_MAX_LENGTH" xml:space="preserve">
+    <value>The content must be at most 2000 characters long.</value>
+  </data>
   <data name="EMAIL_ALREADY_REGISTERED" xml:space="preserve">
     <value>The e-mail is already registered.</value>
   </data>
@@ -140,6 +146,12 @@
   </data>
   <data name="PASSWORD_LENGTH" xml:space="preserve">
     <value>The password must be at least 8 characters long.</value>
+  </data>
+  <data name="TITLE_EMPTY" xml:space="preserve">
+    <value>The title cannot be empty.</value>
+  </data>
+  <data name="TITLE_MAX_LENGTH" xml:space="preserve">
+    <value>The title must be at most 255 characters long.</value>
   </data>
   <data name="UNKNOWN_ERROR" xml:space="preserve">
     <value>Unknown error.</value>
