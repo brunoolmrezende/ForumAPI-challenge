@@ -1,6 +1,6 @@
 ﻿namespace Forum.Communication.Request
 {
-    public class RequestRegisterTopicJson
+    public class RequestTopicJson
     {
         public string Title { get; set; } = string.Empty;
         public string Content { get; set; } = string.Empty;

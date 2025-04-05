@@ -155,6 +155,9 @@
     <value>O título deve conter no máximo 255 caracteres.
 </value>
   </data>
+  <data name="TOPIC_NOT_FOUND" xml:space="preserve">
+    <value>O tópico não foi encontrado.</value>
+  </data>
   <data name="UNKNOWN_ERROR" xml:space="preserve">
     <value>Erro desconhecido.</value>
   </data>

@@ -52,6 +52,7 @@ namespace Forum.Infrastructure
             services.AddScoped<IUserReadOnlyRepository, UserRepository>();
 
             services.AddScoped<ITopicWriteOnlyRepository, TopicRepository>();
+            services.AddScoped<ITopicUpdateOnlyRepository, TopicRepository>();
 
             services.AddScoped<IUnitOfWork, UnitOfWork>();
         }

@@ -1,37 +1,42 @@
 ﻿using AutoMapper;
+using Forum.Application.UseCases.Topic.Register;
 using Forum.Communication.Request;
-using Forum.Communication.Response;
 using Forum.Domain.Repository;
 using Forum.Domain.Repository.Topic;
 using Forum.Domain.Services;
+using Forum.Exceptions;
 using Forum.Exceptions.ExceptionBase;
 
-namespace Forum.Application.UseCases.Topic.Register
+namespace Forum.Application.UseCases.Topic.Update
 {
-    public class RegisterTopicUseCase(
-        ILoggedUser loggedUser, 
+    public class UpdateTopicUseCase(
+        ILoggedUser loggedUser,
+        ITopicUpdateOnlyRepository updateOnlyRepository,
         IMapper mapper,
-        ITopicWriteOnlyRepository writeOnlyRepository,
-        IUnitOfWork unitOfWork) : IRegisterTopicUseCase
+        IUnitOfWork unitOfWork) : IUpdateTopicUseCase
     {
         private readonly ILoggedUser _loggedUser = loggedUser;
+        private readonly ITopicUpdateOnlyRepository _updateOnlyRepository = updateOnlyRepository;
         private readonly IMapper _mapper = mapper;
-        private readonly ITopicWriteOnlyRepository _writeOnlyRepository = writeOnlyRepository;
         private readonly IUnitOfWork _unitOfWork = unitOfWork;
 
-        public async Task<ResponseRegisteredTopicJson> Execute(RequestTopicJson request)
+        public async Task Execute(RequestTopicJson request, long id)
         {
             Validate(request);
 
             var loggedUser = await _loggedUser.User();
 
-            var topic = _mapper.Map<Domain.Entities.Topic>(request);
-            topic.UserId = loggedUser.Id;
+            var topic = await _updateOnlyRepository.GetById(id, loggedUser.Id);
 
-            await _writeOnlyRepository.Add(topic);
+            if (topic is null)
+            {
+                throw new NotFoundException(ResourceMessagesException.TOPIC_NOT_FOUND);
+            }
+
+            _mapper.Map(request, topic);
+
+            _updateOnlyRepository.Update(topic);
             await _unitOfWork.Commit();
-
-            return _mapper.Map<ResponseRegisteredTopicJson>(topic);
         }
 
         private static void Validate(RequestTopicJson request)
@@ -45,7 +50,7 @@ namespace Forum.Application.UseCases.Topic.Register
                 var errors = result.Errors.Select(error => error.ErrorMessage).ToList();
 
                 throw new ErrorOnValidationException(errors);
-            }       
+            }
         }
     }
 }

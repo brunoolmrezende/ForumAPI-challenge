@@ -169,6 +169,15 @@ namespace Forum.Exceptions {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to The topic could not be found..
+        /// </summary>
+        public static string TOPIC_NOT_FOUND {
+            get {
+                return ResourceManager.GetString("TOPIC_NOT_FOUND", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Unknown error..
         /// </summary>
         public static string UNKNOWN_ERROR {

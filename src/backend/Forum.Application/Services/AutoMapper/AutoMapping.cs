@@ -18,7 +18,7 @@ namespace Forum.Application.Services.AutoMapper
             CreateMap<RequestRegisterUserJson, User>()
                 .ForMember(dest => dest.Password, opt => opt.Ignore());
 
-            CreateMap<RequestRegisterTopicJson, Topic>();
+            CreateMap<RequestTopicJson, Topic>();
         }
 
         private void DomainToResponse()

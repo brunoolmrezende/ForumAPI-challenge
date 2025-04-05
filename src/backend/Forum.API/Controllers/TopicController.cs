@@ -1,24 +1,40 @@
 ﻿using Forum.API.Attributes;
 using Forum.Application.UseCases.Topic.Register;
+using Forum.Application.UseCases.Topic.Update;
 using Forum.Communication.Request;
 using Forum.Communication.Response;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Forum.API.Controllers
 {
-    [AuthenticatedUser]
     public class TopicController : ForumControllerBase
     {
         [HttpPost]
         [ProducesResponseType(typeof(ResponseRegisteredTopicJson), StatusCodes.Status201Created)]
         [ProducesResponseType(typeof(ResponseErrorJson), StatusCodes.Status400BadRequest)]
+        [AuthenticatedUser]
         public async Task<IActionResult> Register(
             [FromServices] IRegisterTopicUseCase useCase,
-            [FromBody] RequestRegisterTopicJson request)
+            [FromBody] RequestTopicJson request)
         {
             var response = await useCase.Execute(request);
 
             return Created(string.Empty, response);
         }
+
+        [HttpPut]
+        [Route("{id}")]
+        [ProducesResponseType(StatusCodes.Status204NoContent)]
+        [AuthenticatedUser]
+        public async Task<IActionResult> Update(
+            [FromServices] IUpdateTopicUseCase useCase,
+            [FromBody] RequestTopicJson request,
+            [FromRoute] long id)
+        {
+            await useCase.Execute(request, id);
+
+            return NoContent();
+        }
+
     }
 }

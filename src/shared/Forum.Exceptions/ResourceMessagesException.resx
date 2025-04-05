@@ -153,6 +153,9 @@
   <data name="TITLE_MAX_LENGTH" xml:space="preserve">
     <value>The title must be at most 255 characters long.</value>
   </data>
+  <data name="TOPIC_NOT_FOUND" xml:space="preserve">
+    <value>The topic could not be found.</value>
+  </data>
   <data name="UNKNOWN_ERROR" xml:space="preserve">
     <value>Unknown error.</value>
   </data>

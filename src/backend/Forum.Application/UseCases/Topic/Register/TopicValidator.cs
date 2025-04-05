@@ -4,9 +4,9 @@ using Forum.Exceptions;
 
 namespace Forum.Application.UseCases.Topic.Register
 {
-    public class RegisterTopicValidator : AbstractValidator<RequestRegisterTopicJson>
+    public class TopicValidator : AbstractValidator<RequestTopicJson>
     {
-        public RegisterTopicValidator()
+        public TopicValidator()
         {
             RuleFor(topic => topic.Title)
                 .NotEmpty().WithMessage(ResourceMessagesException.TITLE_EMPTY)
