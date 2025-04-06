@@ -27,6 +27,22 @@ namespace WebApi.Test
             return await _httpClient.PutAsJsonAsync(endpoint, request);
         }
 
+        protected async Task<HttpResponseMessage> DoDelete(string endpoint, string token = "", string culture = "en")
+        {
+            ChangeRequestCulture(culture);
+            AuthorizeRequest(token);
+
+            return await _httpClient.DeleteAsync(endpoint);
+        }
+
+        protected async Task<HttpResponseMessage> DoGet(string endpoint, string token, string culture = "en")
+        {
+            ChangeRequestCulture(culture);
+            AuthorizeRequest(token);
+
+            return await _httpClient.GetAsync(endpoint);
+        }
+
         private void ChangeRequestCulture(string culture)
         {
             if (_httpClient.DefaultRequestHeaders.AcceptLanguage != null)
