@@ -4,7 +4,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Forum.Infrastructure.DataAccess.Repositories
 {
-    public class TopicRepository(ForumDbContext dbContext) : ITopicWriteOnlyRepository, ITopicUpdateOnlyRepository
+    public class TopicRepository(ForumDbContext dbContext) : ITopicWriteOnlyRepository, ITopicUpdateOnlyRepository, ITopicReadOnlyRepository
     {
         private readonly ForumDbContext _dbContext = dbContext;
 
@@ -13,7 +13,7 @@ namespace Forum.Infrastructure.DataAccess.Repositories
             await _dbContext.Topics.AddAsync(topic);
         }
 
-        public async Task<Topic?> GetById(long id, long loggedUserId)
+        async Task<Topic?> ITopicUpdateOnlyRepository.GetById(long id, long loggedUserId)
         {
             return await _dbContext
                 .Topics
@@ -23,6 +23,21 @@ namespace Forum.Infrastructure.DataAccess.Repositories
         public void Update(Topic topic)
         {
             _dbContext.Topics.Update(topic);
+        }
+
+        async Task<Topic?> ITopicReadOnlyRepository.GetById(long id, long loggedUserId)
+        {
+            return await _dbContext
+                .Topics
+                .AsNoTracking()
+                .FirstOrDefaultAsync(topic => topic.Id.Equals(id) && topic.UserId.Equals(loggedUserId) && topic.Active);
+        }
+
+        public async Task Delete(long id)
+        {
+            var topic = await _dbContext.Topics.FindAsync(id);
+
+            _dbContext.Topics.Remove(topic!);
         }
     }
 }

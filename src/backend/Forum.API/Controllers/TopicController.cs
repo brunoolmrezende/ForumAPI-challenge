@@ -1,4 +1,5 @@
 ﻿using Forum.API.Attributes;
+using Forum.Application.UseCases.Topic.Delete;
 using Forum.Application.UseCases.Topic.Register;
 using Forum.Application.UseCases.Topic.Update;
 using Forum.Communication.Request;
@@ -36,5 +37,18 @@ namespace Forum.API.Controllers
             return NoContent();
         }
 
+        [HttpDelete]
+        [Route("{id}")]
+        [ProducesResponseType(StatusCodes.Status204NoContent)]
+        [ProducesResponseType(typeof(ResponseErrorJson), StatusCodes.Status404NotFound)]
+        [AuthenticatedUser]
+        public async Task<IActionResult> Delete(
+            [FromServices] IDeleteTopicUseCase useCase,
+            [FromRoute] long id)
+        {
+            await useCase.Execute(id);
+
+            return NoContent();
+        }
     }
 }

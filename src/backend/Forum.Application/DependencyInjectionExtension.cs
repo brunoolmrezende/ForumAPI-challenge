@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using Forum.Application.Services.AutoMapper;
 using Forum.Application.UseCases.Login.DoLogin;
+using Forum.Application.UseCases.Topic.Delete;
 using Forum.Application.UseCases.Topic.Register;
 using Forum.Application.UseCases.Topic.Update;
 using Forum.Application.UseCases.User.Register;
@@ -24,6 +25,7 @@ namespace Forum.Application
 
             services.AddScoped<IRegisterTopicUseCase, RegisterTopicUseCase>();
             services.AddScoped<IUpdateTopicUseCase, UpdateTopicUseCase>();
+            services.AddScoped<IDeleteTopicUseCase, DeleteTopicUseCase>();
         }
 
         private static void AddAutoMapper(this IServiceCollection services)
