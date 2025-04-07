@@ -1,4 +1,5 @@
 ﻿using Forum.API.Attributes;
+using Forum.Application.UseCases.Comment.Delete;
 using Forum.Application.UseCases.Comment.Register;
 using Forum.Application.UseCases.Comment.Update;
 using Forum.Communication.Request;
@@ -37,6 +38,20 @@ namespace Forum.API.Controllers
             [FromBody] RequestCommentJson request)
         {
             await useCase.Execute(topicId, commentId, request);
+
+            return NoContent();
+        }
+
+        [HttpDelete]
+        [Route("{topicId}/{commentId}")]
+        [ProducesResponseType(StatusCodes.Status204NoContent)]
+        [ProducesResponseType(typeof(ResponseErrorJson), StatusCodes.Status404NotFound)]
+        public async Task<IActionResult> Delete(
+            [FromServices] IDeleteCommentUseCase useCase,
+            [FromRoute] long topicId,
+            [FromRoute] long commentId)
+        {
+            await useCase.Execute(topicId, commentId);
 
             return NoContent();
         }

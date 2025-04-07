@@ -3,5 +3,6 @@
     public interface ICommentWriteOnlyRepository
     {
         Task Add(Entities.Comment comment);
+        void Delete(Entities.Comment comment);
     }
 }

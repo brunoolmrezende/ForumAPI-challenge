@@ -13,6 +13,11 @@ namespace Forum.Infrastructure.DataAccess.Repositories
             await _dbContext.Comments.AddAsync(comment);
         }
 
+        public void Delete(Comment comment)
+        {
+            _dbContext.Comments.Remove(comment);
+        }
+
         public async Task<Comment?> GetById(long id, long loggedUserId, long topicId)
         {
             return await _dbContext
