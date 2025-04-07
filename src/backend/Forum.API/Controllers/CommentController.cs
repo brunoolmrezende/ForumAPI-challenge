@@ -1,5 +1,6 @@
 ﻿using Forum.API.Attributes;
 using Forum.Application.UseCases.Comment.Register;
+using Forum.Application.UseCases.Comment.Update;
 using Forum.Communication.Request;
 using Forum.Communication.Response;
 using Microsoft.AspNetCore.Mvc;
@@ -22,6 +23,22 @@ namespace Forum.API.Controllers
             var response = await useCase.Execute(topicId, request);
 
             return Created(string.Empty, response);
+        }
+
+        [HttpPut]
+        [Route("{topicId}/{commentId}")]
+        [ProducesResponseType(StatusCodes.Status204NoContent)]
+        [ProducesResponseType(typeof(ResponseErrorJson), StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(typeof(ResponseErrorJson), StatusCodes.Status404NotFound)]
+        public async Task<IActionResult> Update(
+            [FromServices] IUpdateCommentUseCase useCase,
+            [FromRoute]long topicId,
+            [FromRoute] long commentId,
+            [FromBody] RequestCommentJson request)
+        {
+            await useCase.Execute(topicId, commentId, request);
+
+            return NoContent();
         }
     }
 }

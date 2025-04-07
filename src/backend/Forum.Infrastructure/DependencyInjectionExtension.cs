@@ -57,6 +57,7 @@ namespace Forum.Infrastructure
             services.AddScoped<ITopicReadOnlyRepository, TopicRepository>();
 
             services.AddScoped<ICommentWriteOnlyRepository, CommentRepository>();
+            services.AddScoped<ICommentUpdateOnlyRepository, CommentRepository>();
 
             services.AddScoped<IUnitOfWork, UnitOfWork>();
         }

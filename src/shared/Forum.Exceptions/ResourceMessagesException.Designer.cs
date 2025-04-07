@@ -61,6 +61,16 @@ namespace Forum.Exceptions {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to The comment could not be found.
+        ///.
+        /// </summary>
+        public static string COMMENT_NOT_FOUND {
+            get {
+                return ResourceManager.GetString("COMMENT_NOT_FOUND", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to The content cannot be empty..
         /// </summary>
         public static string CONTENT_EMPTY {

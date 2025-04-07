@@ -175,4 +175,7 @@
 
 </value>
   </data>
+  <data name="COMMENT_NOT_FOUND" xml:space="preserve">
+    <value>O comentário não foi encontrado.</value>
+  </data>
 </root>

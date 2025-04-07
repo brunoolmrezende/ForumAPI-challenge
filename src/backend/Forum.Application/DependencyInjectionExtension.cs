@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using Forum.Application.Services.AutoMapper;
 using Forum.Application.UseCases.Comment.Register;
+using Forum.Application.UseCases.Comment.Update;
 using Forum.Application.UseCases.Login.DoLogin;
 using Forum.Application.UseCases.Topic.Delete;
 using Forum.Application.UseCases.Topic.Register;
@@ -29,6 +30,7 @@ namespace Forum.Application
             services.AddScoped<IDeleteTopicUseCase, DeleteTopicUseCase>();
 
             services.AddScoped<IRegisterCommentUseCase, RegisterCommentUseCase>();
+            services.AddScoped<IUpdateCommentUseCase, UpdateCommentUseCase>();
         }
 
         private static void AddAutoMapper(this IServiceCollection services)
