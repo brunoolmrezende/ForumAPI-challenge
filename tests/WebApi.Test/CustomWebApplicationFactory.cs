@@ -11,6 +11,7 @@ namespace WebApi.Test
     {
         private Forum.Domain.Entities.User _user = default!;
         private Forum.Domain.Entities.Topic _topic = default!;
+        private Forum.Domain.Entities.Comment _comment = default!;
         private string _password = string.Empty;
 
         protected override void ConfigureWebHost(IWebHostBuilder builder)
@@ -49,15 +50,20 @@ namespace WebApi.Test
 
         public long GetTopicId() => _topic.Id;
 
+        public long GetCommentId() => _comment.Id;
+
         private void StartDatabase(ForumDbContext dbContext)
         {
             (_user, _password) = UserBuilder.Build();
 
             _topic = TopicBuilder.Build(_user);
 
+            _comment = CommentBuilder.Build(_user, _topic.Id);
+
             dbContext.Database.EnsureCreated();
             dbContext.Users.Add(_user);
             dbContext.Topics.Add(_topic);
+            dbContext.Comments.Add(_comment);
             dbContext.SaveChanges();
         }
     }
