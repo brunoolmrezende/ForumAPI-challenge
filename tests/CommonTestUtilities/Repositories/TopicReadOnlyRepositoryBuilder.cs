@@ -23,6 +23,16 @@ namespace CommonTestUtilities.Repositories
             return this;
         }
 
+        public TopicReadOnlyRepositoryBuilder ExistsById(Topic? topic)
+        {
+            if (topic is not null)
+            {
+                _mock.Setup(repository => repository.ExistsById(topic.Id)).ReturnsAsync(true);
+            }
+
+            return this;
+        }
+
         public ITopicReadOnlyRepository Build() => _mock.Object;
     }
 }
