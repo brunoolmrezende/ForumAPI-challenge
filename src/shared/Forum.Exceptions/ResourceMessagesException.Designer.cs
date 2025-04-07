@@ -97,6 +97,16 @@ namespace Forum.Exceptions {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to The e-mail must be at most 255 characters long.
+        ///.
+        /// </summary>
+        public static string EMAIL_MAX_LENGTH {
+            get {
+                return ResourceManager.GetString("EMAIL_MAX_LENGTH", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to The password cannot be empty..
         /// </summary>
         public static string EMPTY_PASSWORD {
@@ -129,6 +139,15 @@ namespace Forum.Exceptions {
         public static string NAME_EMPTY {
             get {
                 return ResourceManager.GetString("NAME_EMPTY", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to The name must be at most 255 characters long..
+        /// </summary>
+        public static string NAME_MAX_LENGTH {
+            get {
+                return ResourceManager.GetString("NAME_MAX_LENGTH", resourceCulture);
             }
         }
         

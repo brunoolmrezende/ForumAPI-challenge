@@ -147,6 +147,9 @@
   <data name="PASSWORD_LENGTH" xml:space="preserve">
     <value>The password must be at least 8 characters long.</value>
   </data>
+  <data name="NAME_MAX_LENGTH" xml:space="preserve">
+    <value>The name must be at most 255 characters long.</value>
+  </data>
   <data name="TITLE_EMPTY" xml:space="preserve">
     <value>The title cannot be empty.</value>
   </data>
@@ -161,5 +164,9 @@
   </data>
   <data name="USER_WITHOUT_PERMISSION_ACCESS_RESOURCE" xml:space="preserve">
     <value>User does not have permission to access this resource.</value>
+  </data>
+  <data name="EMAIL_MAX_LENGTH" xml:space="preserve">
+    <value>The e-mail must be at most 255 characters long.
+</value>
   </data>
 </root>
