@@ -24,6 +24,8 @@ namespace Forum.Application.Services.AutoMapper
         private void DomainToResponse()
         {
             CreateMap<Topic, ResponseRegisteredTopicJson>();
+
+            CreateMap<Comment, ResponseRegisteredCommentJson>();
         }
     }
 }

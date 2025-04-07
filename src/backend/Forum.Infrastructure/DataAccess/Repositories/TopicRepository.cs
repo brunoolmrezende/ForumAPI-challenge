@@ -39,5 +39,13 @@ namespace Forum.Infrastructure.DataAccess.Repositories
 
             _dbContext.Topics.Remove(topic!);
         }
+
+        public async Task<bool> ExistsById(long topicId)
+        {
+            return await _dbContext
+                .Topics
+                .AsNoTracking()
+                .AnyAsync(topic => topic.Id.Equals(topicId) && topic.Active);
+        }
     }
 }
