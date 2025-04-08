@@ -13,6 +13,30 @@ namespace Forum.Infrastructure.Services.LoggedUser
         private readonly ForumDbContext _dbContext = dbContext;
         private readonly ITokenProvider _tokenProvider = tokenProvider;
 
+        public async Task<User?> TryGetUser()
+        {
+            try
+            {
+                var token = _tokenProvider.Value();
+
+                var tokenHandler = new JwtSecurityTokenHandler();
+
+                var jwtSecurityToken = tokenHandler.ReadJwtToken(token);
+
+                var identifier = jwtSecurityToken.Claims.First(claim => claim.Type == ClaimTypes.Sid).Value;
+
+                var userIdentifier = Guid.Parse(identifier);
+
+                return await _dbContext
+                    .Users
+                    .AsNoTracking().FirstOrDefaultAsync(user => user.UserIdentifier.Equals(userIdentifier) && user.Active);
+            }
+            catch
+            {
+                return null;
+            }
+        }
+
         public async Task<User> User()
         {
             var token = _tokenProvider.Value();

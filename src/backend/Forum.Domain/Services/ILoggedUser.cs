@@ -5,5 +5,6 @@ namespace Forum.Domain.Services
     public interface ILoggedUser
     {
         Task<User> User();
+        Task<User?> TryGetUser();
     }
 }

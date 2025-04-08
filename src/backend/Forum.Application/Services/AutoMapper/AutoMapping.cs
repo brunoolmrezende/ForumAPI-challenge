@@ -26,6 +26,15 @@ namespace Forum.Application.Services.AutoMapper
             CreateMap<Topic, ResponseRegisteredTopicJson>();
 
             CreateMap<Comment, ResponseRegisteredCommentJson>();
+
+            CreateMap<Comment, ResponseCommentJson>()
+                .ForMember(dest => dest.Author, opt => opt.MapFrom(src => src.User.Name));
+
+            CreateMap<User, ResponseUserSummaryJson>();
+
+            CreateMap<Topic, ResponseTopicDetailsJson>()
+                .ForMember(dest => dest.TotalLikes, opt => opt.MapFrom(src => src.Likes.Count))
+                .ForMember(dest => dest.Comments, opt => opt.MapFrom(src => src.Comments));
         }
     }
 }

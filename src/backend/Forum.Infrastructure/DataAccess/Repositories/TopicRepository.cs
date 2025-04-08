@@ -47,5 +47,16 @@ namespace Forum.Infrastructure.DataAccess.Repositories
                 .AsNoTracking()
                 .AnyAsync(topic => topic.Id.Equals(topicId) && topic.Active);
         }
+
+        public async Task<Topic?> GetTopicDetails(long id)
+        {
+            return await _dbContext
+                .Topics
+                .Include(x => x.User)
+                .Include(x => x.Likes)
+                .Include(x => x.Comments).ThenInclude(x => x.User)
+                .AsNoTracking()
+                .FirstOrDefaultAsync(topic => topic.Id.Equals(id) && topic.Active);
+        }
     }
 }
