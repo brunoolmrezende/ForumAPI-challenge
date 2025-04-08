@@ -6,7 +6,7 @@
         public long TopicId { get; set; }
         public long UserId { get; set; }
 
-        public Topic? Topic { get; set; }
-        public User? User { get; set; }
+        public Topic Topic { get; set; } = default!;
+        public User User { get; set; } = default!;
     }
 }
