@@ -3,6 +3,7 @@ using Forum.Application.Services.AutoMapper;
 using Forum.Application.UseCases.Comment.Delete;
 using Forum.Application.UseCases.Comment.Register;
 using Forum.Application.UseCases.Comment.Update;
+using Forum.Application.UseCases.Like;
 using Forum.Application.UseCases.Login.DoLogin;
 using Forum.Application.UseCases.Topic.Delete;
 using Forum.Application.UseCases.Topic.Register;
@@ -33,6 +34,8 @@ namespace Forum.Application
             services.AddScoped<IRegisterCommentUseCase, RegisterCommentUseCase>();
             services.AddScoped<IUpdateCommentUseCase, UpdateCommentUseCase>();
             services.AddScoped<IDeleteCommentUseCase, DeleteCommentUseCase>();
+
+            services.AddScoped<IToggleLikeUseCase, ToggleLikeUseCase>();
         }
 
         private static void AddAutoMapper(this IServiceCollection services)

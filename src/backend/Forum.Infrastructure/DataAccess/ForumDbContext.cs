@@ -8,6 +8,7 @@ namespace Forum.Infrastructure.DataAccess
         public DbSet<User> Users { get; set; }
         public DbSet<Topic> Topics { get; set; }
         public DbSet<Comment> Comments { get; set; }
+        public DbSet<TopicLike> TopicLikes { get; set; }
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.ApplyConfigurationsFromAssembly(typeof(ForumDbContext).Assembly);

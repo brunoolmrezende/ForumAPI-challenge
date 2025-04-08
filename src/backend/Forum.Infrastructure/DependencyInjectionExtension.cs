@@ -1,6 +1,7 @@
 ﻿using FluentMigrator.Runner;
 using Forum.Domain.Repository;
 using Forum.Domain.Repository.Comment;
+using Forum.Domain.Repository.Like.TopicLike;
 using Forum.Domain.Repository.Topic;
 using Forum.Domain.Repository.User;
 using Forum.Domain.Security.AccessToken;
@@ -58,6 +59,9 @@ namespace Forum.Infrastructure
 
             services.AddScoped<ICommentWriteOnlyRepository, CommentRepository>();
             services.AddScoped<ICommentUpdateOnlyRepository, CommentRepository>();
+
+            services.AddScoped<ITopicLikeUpdateOnlyRepository, TopicLikeRepository>();
+            services.AddScoped<ITopicLikeWriteOnlyRepository, TopicLikeRepository>();
 
             services.AddScoped<IUnitOfWork, UnitOfWork>();
         }
