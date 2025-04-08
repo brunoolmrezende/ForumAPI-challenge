@@ -1,4 +1,5 @@
-﻿using Forum.Domain.Repository.Topic;
+﻿using Forum.Domain.Repository.Like.TopicLike;
+using Forum.Domain.Repository.Topic;
 using Moq;
 
 namespace CommonTestUtilities.Repositories

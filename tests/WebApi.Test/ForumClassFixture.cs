@@ -11,7 +11,7 @@ namespace WebApi.Test
             _httpClient = factory.CreateClient();
         }
 
-        protected async Task<HttpResponseMessage> DoPost(string endpoint, object request, string token = "", string culture = "en")
+        protected async Task<HttpResponseMessage> DoPost(string endpoint, object? request, string token = "", string culture = "en")
         {
             ChangeRequestCulture(culture);
             AuthorizeRequest(token);

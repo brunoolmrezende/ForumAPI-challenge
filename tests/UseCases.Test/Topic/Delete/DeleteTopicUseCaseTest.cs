@@ -38,7 +38,7 @@ namespace UseCases.Test.Topic.Delete
                     && error.GetErrorMessage().Contains(ResourceMessagesException.TOPIC_NOT_FOUND));
         }
 
-        private DeleteTopicUseCase CreateUseCase(
+        private static DeleteTopicUseCase CreateUseCase(
             Forum.Domain.Entities.User user, 
             Forum.Domain.Entities.Topic? topic = null)
         {
