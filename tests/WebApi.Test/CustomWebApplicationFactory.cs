@@ -12,6 +12,7 @@ namespace WebApi.Test
         private Forum.Domain.Entities.User _user = default!;
         private Forum.Domain.Entities.Topic _topic = default!;
         private Forum.Domain.Entities.Comment _comment = default!;
+        private Forum.Domain.Entities.TopicLike _topicLike = default!;
         private string _password = string.Empty;
 
         protected override void ConfigureWebHost(IWebHostBuilder builder)
@@ -48,6 +49,7 @@ namespace WebApi.Test
         public string GetPassword() => _password;
         public Guid GetIdentifier() => _user.UserIdentifier;
 
+        public Forum.Domain.Entities.Topic GetTopic() => _topic;
         public long GetTopicId() => _topic.Id;
 
         public long GetCommentId() => _comment.Id;
@@ -60,10 +62,13 @@ namespace WebApi.Test
 
             _comment = CommentBuilder.Build(_user, _topic.Id);
 
+            _topicLike = TopicLikeBuilder.Build(_topic, _user);
+
             dbContext.Database.EnsureCreated();
             dbContext.Users.Add(_user);
             dbContext.Topics.Add(_topic);
             dbContext.Comments.Add(_comment);
+            dbContext.TopicLikes.Add(_topicLike);
             dbContext.SaveChanges();
         }
     }

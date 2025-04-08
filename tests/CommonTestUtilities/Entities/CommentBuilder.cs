@@ -11,7 +11,8 @@ namespace CommonTestUtilities.Entities
                 .RuleFor(comment => comment.Id, _ => 1)
                 .RuleFor(comment => comment.Content, f => f.Lorem.Paragraph(1))
                 .RuleFor(comment => comment.UserId, _ => user.Id)
-                .RuleFor(comment => comment.TopicId, _ => topicId);
+                .RuleFor(comment => comment.TopicId, _ => topicId)
+                .RuleFor(comment => comment.CreatedOn, _ => DateTime.UtcNow);
         }
     }
 }

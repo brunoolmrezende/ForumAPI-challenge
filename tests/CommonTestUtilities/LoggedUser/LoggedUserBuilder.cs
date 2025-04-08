@@ -13,5 +13,14 @@ namespace CommonTestUtilities.LoggedUser
 
             return mock.Object;
         }
+
+        public static ILoggedUser BuildTryGetUser(Forum.Domain.Entities.User? user)
+        {
+            var mock = new Mock<ILoggedUser>();
+
+            mock.Setup(x => x.TryGetUser()).ReturnsAsync(user);
+
+            return mock.Object;
+        }
     }
 }
