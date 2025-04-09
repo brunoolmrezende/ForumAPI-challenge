@@ -58,5 +58,18 @@ namespace Forum.Infrastructure.DataAccess.Repositories
                 .AsNoTracking()
                 .FirstOrDefaultAsync(topic => topic.Id.Equals(id) && topic.Active);
         }
+
+        public async Task<List<Topic>> GetAllTopics()
+        {
+            return await _dbContext
+                .Topics
+                .Where(topic => topic.Active)
+                .Include(topic => topic.User)
+                .Include(topic => topic.Likes)
+                .Include(topic => topic.Comments).ThenInclude(c => c.User)
+                .AsNoTracking()
+                .OrderByDescending(topic => topic.CreatedOn)
+                .ToListAsync();
+        }
     }
 }

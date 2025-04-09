@@ -3,6 +3,7 @@ using Forum.Application.Services.AutoMapper;
 using Forum.Application.UseCases.Comment.Delete;
 using Forum.Application.UseCases.Comment.Register;
 using Forum.Application.UseCases.Comment.Update;
+using Forum.Application.UseCases.Forum;
 using Forum.Application.UseCases.Like;
 using Forum.Application.UseCases.Login.DoLogin;
 using Forum.Application.UseCases.Topic.Delete;
@@ -32,6 +33,7 @@ namespace Forum.Application
             services.AddScoped<IUpdateTopicUseCase, UpdateTopicUseCase>();
             services.AddScoped<IDeleteTopicUseCase, DeleteTopicUseCase>();
             services.AddScoped<IGetTopicByIdUseCase, GetTopicByIdUseCase>();
+            services.AddScoped<IGetAllTopicsUseCase, GetAllTopicsUseCase>();
 
             services.AddScoped<IRegisterCommentUseCase, RegisterCommentUseCase>();
             services.AddScoped<IUpdateCommentUseCase, UpdateCommentUseCase>();

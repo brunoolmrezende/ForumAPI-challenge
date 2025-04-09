@@ -17,4 +17,8 @@
     <ProjectReference Include="..\Forum.Domain\Forum.Domain.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="UseCases\Topic\Filter\" />
+  </ItemGroup>
+
 </Project>
