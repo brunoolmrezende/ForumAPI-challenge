@@ -9,6 +9,7 @@ using Forum.Communication.Request;
 using Forum.Exceptions;
 using Forum.Exceptions.ExceptionBase;
 
+
 namespace UseCases.Test.Login.DoLogin
 {
     public class DoLoginUseCaseTest
@@ -43,7 +44,7 @@ namespace UseCases.Test.Login.DoLogin
                 .Where(error => error.GetErrorMessage().Contains(ResourceMessagesException.INVALID_EMAIL_OR_PASSWORD));
         }
 
-        private DoLoginUseCase CreateUseCase(Forum.Domain.Entities.User? user = null)
+        private static DoLoginUseCase CreateUseCase(Forum.Domain.Entities.User? user = null)
         {
             var readOnlyRepository = new UserReadOnlyRepositoryBuilder();
             var encryption = PasswordEncryptionBuilder.Build();

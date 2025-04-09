@@ -3,9 +3,9 @@ using CommonTestUtilities.LoggedUser;
 using CommonTestUtilities.Repositories;
 using FluentAssertions;
 using Forum.Application.UseCases.Comment.Delete;
-using Forum.Domain.Repository.Comment;
 using Forum.Exceptions;
 using Forum.Exceptions.ExceptionBase;
+using Forum.Domain.Entities;
 
 namespace UseCases.Test.Comment.Delete
 {
