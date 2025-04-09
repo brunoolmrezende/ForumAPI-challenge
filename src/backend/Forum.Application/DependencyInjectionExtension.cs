@@ -7,6 +7,7 @@ using Forum.Application.UseCases.Forum;
 using Forum.Application.UseCases.Like;
 using Forum.Application.UseCases.Login.DoLogin;
 using Forum.Application.UseCases.Topic.Delete;
+using Forum.Application.UseCases.Topic.Filter;
 using Forum.Application.UseCases.Topic.GetById;
 using Forum.Application.UseCases.Topic.Register;
 using Forum.Application.UseCases.Topic.Update;
@@ -34,6 +35,7 @@ namespace Forum.Application
             services.AddScoped<IDeleteTopicUseCase, DeleteTopicUseCase>();
             services.AddScoped<IGetTopicByIdUseCase, GetTopicByIdUseCase>();
             services.AddScoped<IGetAllTopicsUseCase, GetAllTopicsUseCase>();
+            services.AddScoped<IFilterTopicUseCase, FilterTopicUseCase>();
 
             services.AddScoped<IRegisterCommentUseCase, RegisterCommentUseCase>();
             services.AddScoped<IUpdateCommentUseCase, UpdateCommentUseCase>();

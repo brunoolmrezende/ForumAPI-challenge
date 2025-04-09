@@ -1,5 +1,6 @@
 ﻿using Forum.API.Attributes;
 using Forum.Application.UseCases.Topic.Delete;
+using Forum.Application.UseCases.Topic.Filter;
 using Forum.Application.UseCases.Topic.GetById;
 using Forum.Application.UseCases.Topic.Register;
 using Forum.Application.UseCases.Topic.Update;
@@ -61,6 +62,23 @@ namespace Forum.API.Controllers
             [FromRoute] long id)
         {
             var response = await useCase.Execute(id);
+
+            return Ok(response);
+        }
+
+        [HttpPost("filter")]
+        [ProducesResponseType(typeof(ResponseTopicsJson), StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status204NoContent)]
+        public async Task<IActionResult> Filter(
+            [FromServices] IFilterTopicUseCase useCase,
+            [FromBody] RequestFilterTopicJson request)
+        {
+            var response = await useCase.Execute(request);
+
+            if (response.Topics.Count == 0)
+            {
+                return NoContent();
+            }
 
             return Ok(response);
         }

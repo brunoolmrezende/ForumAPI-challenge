@@ -1,6 +1,8 @@
-﻿using Forum.Domain.Entities;
+﻿using Forum.Domain.Dtos;
+using Forum.Domain.Entities;
 using Forum.Domain.Repository.Topic;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Query;
 
 namespace Forum.Infrastructure.DataAccess.Repositories
 {
@@ -50,26 +52,53 @@ namespace Forum.Infrastructure.DataAccess.Repositories
 
         public async Task<Topic?> GetTopicDetails(long id)
         {
-            return await _dbContext
-                .Topics
-                .Include(x => x.User)
-                .Include(x => x.Likes)
-                .Include(x => x.Comments).ThenInclude(x => x.User)
+            return await GetFullTopic()
                 .AsNoTracking()
                 .FirstOrDefaultAsync(topic => topic.Id.Equals(id) && topic.Active);
         }
 
         public async Task<List<Topic>> GetAllTopics()
         {
-            return await _dbContext
+            return await GetFullTopic()
+                .AsNoTracking()
+                .OrderByDescending(topic => topic.CreatedOn)
+                .ToListAsync();
+        }
+
+        public async Task<List<Topic>> Filter(FilterTopicDto filters)
+        {
+            var query = GetFullTopic().AsNoTracking();
+
+            if (!string.IsNullOrWhiteSpace(filters.TopicTitle))
+            {
+                query = query.Where(topic => topic.Title.Contains(filters.TopicTitle));
+            }
+
+            if (!string.IsNullOrWhiteSpace(filters.TopicContent))
+            {
+                query = query.Where(topic => topic.Content.Contains(filters.TopicContent));
+            }
+
+            query = filters.OrderBy?.ToLower() switch
+            {
+                "likes" => query.OrderByDescending(topic => topic.Likes.Count),
+                "comments" => query.OrderByDescending(topic => topic.Comments.Count),
+                "title" => query.OrderBy(topic => topic.Title),
+                _ => query.OrderByDescending(topic => topic.CreatedOn)
+            };
+
+            return await query.ToListAsync();
+        }
+
+        private IIncludableQueryable<Topic, User> GetFullTopic()
+        {
+            return _dbContext
                 .Topics
                 .Where(topic => topic.Active)
                 .Include(topic => topic.User)
                 .Include(topic => topic.Likes)
-                .Include(topic => topic.Comments).ThenInclude(c => c.User)
-                .AsNoTracking()
-                .OrderByDescending(topic => topic.CreatedOn)
-                .ToListAsync();
+                .Include(topic => topic.Comments)
+                .ThenInclude(c => c.User);
         }
     }
 }

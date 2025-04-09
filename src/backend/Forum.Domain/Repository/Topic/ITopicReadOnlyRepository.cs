@@ -1,4 +1,6 @@
-﻿namespace Forum.Domain.Repository.Topic
+﻿using Forum.Domain.Dtos;
+
+namespace Forum.Domain.Repository.Topic
 {
     public interface ITopicReadOnlyRepository
     {
@@ -6,5 +8,6 @@
         Task<Entities.Topic?> GetTopicDetails(long id);
         Task<bool> ExistsById(long topicId);
         Task<List<Entities.Topic>> GetAllTopics();
+        Task<List<Entities.Topic>> Filter(FilterTopicDto filters);
     }
 }
