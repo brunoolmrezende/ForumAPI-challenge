@@ -1,4 +1,5 @@
 ﻿using FluentMigrator;
+using System.Data;
 
 namespace Forum.Infrastructure.DataAccess.Migrations.Versions
 {
@@ -9,7 +10,7 @@ namespace Forum.Infrastructure.DataAccess.Migrations.Versions
         {
             CreateTable("Comments")
                 .WithColumn("Content").AsString(2000).NotNullable()
-                .WithColumn("TopicId").AsInt64().NotNullable().ForeignKey("FK_Comment_Topic_Id", "Topics", "Id")
+                .WithColumn("TopicId").AsInt64().NotNullable().ForeignKey("FK_Comment_Topic_Id", "Topics", "Id").OnDelete(Rule.Cascade)
                 .WithColumn("UserId").AsInt64().NotNullable().ForeignKey("FK_Comment_User_Id", "Users", "Id");
         }
     }

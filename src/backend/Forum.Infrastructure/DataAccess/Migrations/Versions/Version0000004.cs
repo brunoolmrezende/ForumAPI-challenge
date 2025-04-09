@@ -1,4 +1,5 @@
 ﻿using FluentMigrator;
+using System.Data;
 
 namespace Forum.Infrastructure.DataAccess.Migrations.Versions
 {
@@ -9,7 +10,7 @@ namespace Forum.Infrastructure.DataAccess.Migrations.Versions
         {
             CreateTable("TopicLikes")
                 .WithColumn("UserId").AsInt64().NotNullable().ForeignKey("FK_TopicLike_User_Id", "Users", "Id")
-                .WithColumn("TopicId").AsInt64().NotNullable().ForeignKey("FK_TopicLike_Topic_Id", "Topics", "Id");
+                .WithColumn("TopicId").AsInt64().NotNullable().ForeignKey("FK_TopicLike_Topic_Id", "Topics", "Id").OnDelete(Rule.Cascade);
 
             Create.UniqueConstraint("UQ_TopicLike_Topic_User")
                 .OnTable("TopicLikes")
