@@ -19,7 +19,6 @@
 
   <ItemGroup>
     <ProjectReference Include="..\..\src\backend\Forum.Application\Forum.Application.csproj" />
-    <ProjectReference Include="..\..\src\backend\Forum.Domain\Forum.Domain.csproj" />
     <ProjectReference Include="..\CommonTestUtilities\CommonTestUtilities.csproj" />
   </ItemGroup>
 

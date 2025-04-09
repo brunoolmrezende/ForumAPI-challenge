@@ -1,4 +1,5 @@
-﻿using Forum.Domain.Entities;
+﻿using Forum.Domain.Dtos;
+using Forum.Domain.Entities;
 using Forum.Domain.Repository.Topic;
 using Moq;
 
@@ -46,6 +47,13 @@ namespace CommonTestUtilities.Repositories
         public TopicReadOnlyRepositoryBuilder GetAllTopics(List<Topic> topics)
         {
             _mock.Setup(repository => repository.GetAllTopics()).ReturnsAsync(topics);
+
+            return this;
+        }
+
+        public TopicReadOnlyRepositoryBuilder Filter(List<Topic> topics)
+        {
+            _mock.Setup(repository => repository.Filter(It.IsAny<FilterTopicDto>())).ReturnsAsync(topics);
 
             return this;
         }

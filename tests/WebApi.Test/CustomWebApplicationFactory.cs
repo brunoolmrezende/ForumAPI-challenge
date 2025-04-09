@@ -51,6 +51,8 @@ namespace WebApi.Test
 
         public Forum.Domain.Entities.Topic GetTopic() => _topic;
         public long GetTopicId() => _topic.Id;
+        public string GetTopicTitle() => _topic.Title;
+        public string GetTopicContent() => _topic.Content;
 
         public long GetCommentId() => _comment.Id;
 
