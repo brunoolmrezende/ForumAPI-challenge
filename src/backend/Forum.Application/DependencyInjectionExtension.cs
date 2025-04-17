@@ -12,6 +12,7 @@ using Forum.Application.UseCases.Topic.GetById;
 using Forum.Application.UseCases.Topic.Register;
 using Forum.Application.UseCases.Topic.Update;
 using Forum.Application.UseCases.User.Register;
+using Forum.Application.UseCases.User.Update;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace Forum.Application
@@ -27,6 +28,7 @@ namespace Forum.Application
         private static void AddUseCases(this IServiceCollection services)
         {
             services.AddScoped<IRegisterUserUseCase, RegisterUserUseCase>();
+            services.AddScoped<IUpdateUserUseCase, UpdateUserUseCase>();
 
             services.AddScoped<IDoLoginUseCase, DoLoginUseCase>();
 

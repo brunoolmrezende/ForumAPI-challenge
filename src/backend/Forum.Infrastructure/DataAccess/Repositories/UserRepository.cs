@@ -4,7 +4,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Forum.Infrastructure.DataAccess.Repositories
 {
-    public class UserRepository(ForumDbContext dbContext) : IUserWriteOnlyRepository, IUserReadOnlyRepository
+    public class UserRepository(ForumDbContext dbContext) : IUserWriteOnlyRepository, IUserReadOnlyRepository, IUserUpdateOnlyRepository
     {
         private readonly ForumDbContext _dbContext = dbContext;
 
@@ -26,6 +26,17 @@ namespace Forum.Infrastructure.DataAccess.Repositories
         public async Task<User?> GetByEmail(string email)
         {
             return await _dbContext.Users.AsNoTracking().FirstOrDefaultAsync(user => user.Email.Equals(email) && user.Active);
+        }
+
+        public async Task<User> GetById(long id)
+        {
+            return await _dbContext.Users.FirstAsync(user => user.Id.Equals(id)  && user.Active);
+
+        }
+
+        public void Update(User user)
+        {
+            _dbContext.Users.Update(user);
         }
     }
 }
