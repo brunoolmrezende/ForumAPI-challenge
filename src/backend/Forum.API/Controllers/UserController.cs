@@ -1,4 +1,5 @@
-﻿using Forum.Application.UseCases.User.Register;
+﻿using Forum.API.Attributes;
+using Forum.Application.UseCases.User.Register;
 using Forum.Application.UseCases.User.Update;
 using Forum.Communication.Request;
 using Forum.Communication.Response;
@@ -23,6 +24,7 @@ namespace Forum.API.Controllers
         [HttpPut]
         [ProducesResponseType(StatusCodes.Status204NoContent)]
         [ProducesResponseType(typeof(ResponseErrorJson), StatusCodes.Status400BadRequest)]
+        [AuthenticatedUser]
          public async Task<IActionResult> Update(
              [FromServices] IUpdateUserUseCase useCase,
              [FromBody] RequestUpdateUserJson request)

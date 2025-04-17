@@ -1,4 +1,3 @@
-using System.Threading.Tasks;
 using Forum.Communication.Request;
 using Forum.Domain.Repository;
 using Forum.Domain.Repository.User;
