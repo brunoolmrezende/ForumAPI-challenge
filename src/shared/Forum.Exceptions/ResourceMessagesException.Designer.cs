@@ -171,6 +171,15 @@ namespace Forum.Exceptions {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to The password must match the current password to proceed with the change..
+        /// </summary>
+        public static string PASSWORD_DIFFERENT_CURRENT_PASSWORD {
+            get {
+                return ResourceManager.GetString("PASSWORD_DIFFERENT_CURRENT_PASSWORD", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to The password must be at least 8 characters long..
         /// </summary>
         public static string PASSWORD_LENGTH {

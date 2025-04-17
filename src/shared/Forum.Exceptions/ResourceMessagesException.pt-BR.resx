@@ -178,4 +178,7 @@
   <data name="COMMENT_NOT_FOUND" xml:space="preserve">
     <value>O comentário não foi encontrado.</value>
   </data>
+  <data name="PASSWORD_DIFFERENT_CURRENT_PASSWORD" xml:space="preserve">
+    <value>A senha deve coincidir com a senha atual para prosseguir com a alteração.</value>
+  </data>
 </root>

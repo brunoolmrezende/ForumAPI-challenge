@@ -1,4 +1,5 @@
 ﻿using Forum.API.Attributes;
+using Forum.Application.UseCases.User.Change_Password;
 using Forum.Application.UseCases.User.Register;
 using Forum.Application.UseCases.User.Update;
 using Forum.Communication.Request;
@@ -34,5 +35,17 @@ namespace Forum.API.Controllers
             return NoContent();
          }
 
+        [HttpPut("change-password")]
+        [ProducesResponseType(StatusCodes.Status204NoContent)]
+        [ProducesResponseType(typeof(ResponseErrorJson), StatusCodes.Status400BadRequest)]
+        [AuthenticatedUser]
+        public async Task<IActionResult> ChangePassword(
+            [FromServices] IChangePasswordUseCase useCase,
+            [FromBody] RequestChangePasswordJson request)
+        {
+            await useCase.Execute(request);
+
+            return NoContent();
+        }
     }
 }

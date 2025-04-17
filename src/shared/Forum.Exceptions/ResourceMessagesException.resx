@@ -173,4 +173,7 @@
     <value>The comment could not be found.
 </value>
   </data>
+  <data name="PASSWORD_DIFFERENT_CURRENT_PASSWORD" xml:space="preserve">
+    <value>The password must match the current password to proceed with the change.</value>
+  </data>
 </root>
