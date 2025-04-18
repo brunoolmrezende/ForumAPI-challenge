@@ -6,6 +6,7 @@ using Forum.Application.UseCases.Comment.Update;
 using Forum.Application.UseCases.Forum;
 using Forum.Application.UseCases.Like;
 using Forum.Application.UseCases.Login.DoLogin;
+using Forum.Application.UseCases.Token;
 using Forum.Application.UseCases.Topic.Delete;
 using Forum.Application.UseCases.Topic.Filter;
 using Forum.Application.UseCases.Topic.GetById;
@@ -31,6 +32,8 @@ namespace Forum.Application
             services.AddScoped<IRegisterUserUseCase, RegisterUserUseCase>();
             services.AddScoped<IUpdateUserUseCase, UpdateUserUseCase>();
             services.AddScoped<IChangePasswordUseCase, ChangePasswordUseCase>();
+
+            services.AddScoped<IUseRefreshTokenUseCase, UseRerfreshTokenUseCase>();
 
             services.AddScoped<IDoLoginUseCase, DoLoginUseCase>();
 
