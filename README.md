@@ -40,6 +40,7 @@ A aplicação possui autenticação baseada em **JWT** e validações robustas d
 - `GET /forum` — Listar todos os tópicos com detalhes completos
 - `GET /topic/{id}` — Obter um tópico específico com seus comentários
 - `POST /topic/filter` — Filtro dinâmico de tópicos
+- `POST /token/refresh-token` — Obter um novo token
 
 ---
 
