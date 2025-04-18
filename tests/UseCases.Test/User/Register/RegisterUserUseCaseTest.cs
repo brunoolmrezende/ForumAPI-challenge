@@ -24,6 +24,7 @@ namespace UseCases.Test.User.Register
             result.Should().NotBeNull();
             result.Name.Should().Be(request.Name);
             result.Tokens.AccessToken.Should().NotBeNullOrEmpty();
+            result.Tokens.RefreshToken.Should().NotBeNullOrEmpty();
         }
 
         [Fact]
@@ -55,13 +56,17 @@ namespace UseCases.Test.User.Register
                     && error.GetErrorMessage().Contains(ResourceMessagesException.NAME_EMPTY));
         }
 
-        private static RegisterUserUseCase CreateUseCase(string? email = null)
+        private static RegisterUserUseCase CreateUseCase(
+            string? email = null, 
+            Forum.Domain.Entities.RefreshToken? refreshToken = null)
         {
             var mapper = MapperBuilder.Build();
             var userWriteOnlyRepository = new UserWriteOnlyRepositoryBuilder().Build();
             var encryption = PasswordEncryptionBuilder.Build();
             var unitOfWork = UnitOfWorkBuilder.Build();
             var userReadOnlyRepository = new UserReadOnlyRepositoryBuilder();
+            var tokenRepository = new TokenRepositoryBuilder().GetToken(refreshToken).Build();
+            var refreshTokenGenerator = RefreshTokenGeneratorBuilder.Build();
 
             if (!string.IsNullOrWhiteSpace(email))
             {
@@ -70,7 +75,15 @@ namespace UseCases.Test.User.Register
 
             var accessToken = AccessTokenGeneratorBuilder.Build();
 
-            return new RegisterUserUseCase(mapper, userWriteOnlyRepository, encryption, unitOfWork, userReadOnlyRepository.Build(), accessToken);
+            return new RegisterUserUseCase(
+                mapper, 
+                userWriteOnlyRepository, 
+                encryption, 
+                unitOfWork, 
+                userReadOnlyRepository.Build(), 
+                accessToken, 
+                refreshTokenGenerator, 
+                tokenRepository);
         }
     }
 }

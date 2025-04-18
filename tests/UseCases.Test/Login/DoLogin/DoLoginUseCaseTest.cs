@@ -30,6 +30,7 @@ namespace UseCases.Test.Login.DoLogin
             result.Should().NotBeNull();
             result.Name.Should().Be(user.Name);
             result.Tokens.AccessToken.Should().NotBeNullOrEmpty();
+            result.Tokens.RefreshToken.Should().NotBeNullOrEmpty();
         }
 
         [Fact]
@@ -44,10 +45,15 @@ namespace UseCases.Test.Login.DoLogin
                 .Where(error => error.GetErrorMessage().Contains(ResourceMessagesException.INVALID_EMAIL_OR_PASSWORD));
         }
 
-        private static DoLoginUseCase CreateUseCase(Forum.Domain.Entities.User? user = null)
+        private static DoLoginUseCase CreateUseCase(
+            Forum.Domain.Entities.User? user = null,
+            Forum.Domain.Entities.RefreshToken? refreshToken = null)
         {
             var readOnlyRepository = new UserReadOnlyRepositoryBuilder();
             var encryption = PasswordEncryptionBuilder.Build();
+            var tokenRepository = new TokenRepositoryBuilder().GetToken(refreshToken).Build();
+            var refreshTokenGenerator = RefreshTokenGeneratorBuilder.Build();
+            var unitOfWork = UnitOfWorkBuilder.Build();
 
             if (user is not null)
             {
@@ -56,7 +62,13 @@ namespace UseCases.Test.Login.DoLogin
 
             var accessToken = AccessTokenGeneratorBuilder.Build();
 
-            return new DoLoginUseCase(readOnlyRepository.Build(), encryption, accessToken);
+            return new DoLoginUseCase(
+                readOnlyRepository.Build(), 
+                encryption, 
+                accessToken, 
+                refreshTokenGenerator, 
+                tokenRepository, 
+                unitOfWork);
         }
     }
 }
