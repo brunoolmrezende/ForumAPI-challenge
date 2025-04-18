@@ -181,4 +181,10 @@
   <data name="PASSWORD_DIFFERENT_CURRENT_PASSWORD" xml:space="preserve">
     <value>A senha deve coincidir com a senha atual para prosseguir com a alteração.</value>
   </data>
+  <data name="TOKEN_NOT_FOUND" xml:space="preserve">
+    <value>Sessão inválida ou inexistente. Faça login novamente.</value>
+  </data>
+  <data name="EXPIRED_TOKEN" xml:space="preserve">
+    <value>Sua sessão expirou. Faça login novamente para continuar.</value>
+  </data>
 </root>

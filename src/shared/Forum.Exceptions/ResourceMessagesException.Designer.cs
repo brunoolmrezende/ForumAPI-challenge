@@ -126,6 +126,15 @@ namespace Forum.Exceptions {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Your session has expired. Please log in again to continue..
+        /// </summary>
+        public static string EXPIRED_TOKEN {
+            get {
+                return ResourceManager.GetString("EXPIRED_TOKEN", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to The e-mail must be valid..
         /// </summary>
         public static string INVALID_EMAIL {
@@ -203,6 +212,15 @@ namespace Forum.Exceptions {
         public static string TITLE_MAX_LENGTH {
             get {
                 return ResourceManager.GetString("TITLE_MAX_LENGTH", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Invalid or nonexistent session. Please log in again..
+        /// </summary>
+        public static string TOKEN_NOT_FOUND {
+            get {
+                return ResourceManager.GetString("TOKEN_NOT_FOUND", resourceCulture);
             }
         }
         
