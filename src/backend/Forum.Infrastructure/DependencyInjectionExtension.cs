@@ -2,16 +2,19 @@
 using Forum.Domain.Repository;
 using Forum.Domain.Repository.Comment;
 using Forum.Domain.Repository.Like.TopicLike;
+using Forum.Domain.Repository.Token;
 using Forum.Domain.Repository.Topic;
 using Forum.Domain.Repository.User;
 using Forum.Domain.Security.AccessToken;
 using Forum.Domain.Security.Cryptography;
+using Forum.Domain.Security.RefreshToken;
 using Forum.Domain.Services;
 using Forum.Infrastructure.DataAccess;
 using Forum.Infrastructure.DataAccess.Repositories;
 using Forum.Infrastructure.Extensions;
 using Forum.Infrastructure.Security.AccessToken;
 using Forum.Infrastructure.Security.Cryptography;
+using Forum.Infrastructure.Security.RefreshToken;
 using Forum.Infrastructure.Services.LoggedUser;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
@@ -64,6 +67,8 @@ namespace Forum.Infrastructure
             services.AddScoped<ITopicLikeUpdateOnlyRepository, TopicLikeRepository>();
             services.AddScoped<ITopicLikeWriteOnlyRepository, TopicLikeRepository>();
 
+            services.AddScoped<ITokenRepository, TokenRepository>();
+
             services.AddScoped<IUnitOfWork, UnitOfWork>();
         }
 
@@ -79,6 +84,8 @@ namespace Forum.Infrastructure
 
             services.AddScoped<IAccessTokenGenerator>(options => new AccessTokenGenerator(expirationTimeMinutes, signinKey));
             services.AddScoped<IAccessTokenValidator>(options => new AccessTokenValidator(signinKey));
+
+            services.AddScoped<IRefreshTokenGenerator, RefreshTokenGenerator>();
         }
 
         private static void AddLoggedUser(IServiceCollection services)
