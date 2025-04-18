@@ -13,6 +13,7 @@ namespace WebApi.Test
         private Forum.Domain.Entities.Topic _topic = default!;
         private Forum.Domain.Entities.Comment _comment = default!;
         private Forum.Domain.Entities.TopicLike _topicLike = default!;
+        private Forum.Domain.Entities.RefreshToken _refreshToken = default!;
         private string _password = string.Empty;
 
         protected override void ConfigureWebHost(IWebHostBuilder builder)
@@ -56,6 +57,8 @@ namespace WebApi.Test
 
         public long GetCommentId() => _comment.Id;
 
+        public string GetRefreshToken() => _refreshToken.Value;
+
         private void StartDatabase(ForumDbContext dbContext)
         {
             (_user, _password) = UserBuilder.Build();
@@ -66,11 +69,14 @@ namespace WebApi.Test
 
             _topicLike = TopicLikeBuilder.Build(_topic, _user);
 
+            _refreshToken = RefreshTokenBuilder.Build(_user);
+
             dbContext.Database.EnsureCreated();
             dbContext.Users.Add(_user);
             dbContext.Topics.Add(_topic);
             dbContext.Comments.Add(_comment);
             dbContext.TopicLikes.Add(_topicLike);
+            dbContext.RefreshTokens.Add(_refreshToken);
             dbContext.SaveChanges();
         }
     }
