@@ -16,6 +16,8 @@ namespace CommonTestUtilities.Entities
                 .RuleFor(user => user.Id, () => 1)
                 .RuleFor(user => user.Name, (f) => f.Person.FirstName)
                 .RuleFor(user => user.UserIdentifier, _ => Guid.NewGuid())
+                .RuleFor(user => user.ImageIdentifier, _ => Guid.NewGuid().ToString())
+                .RuleFor(user => user.ImageUrl, _ => new Faker().Internet.Url())
                 .RuleFor(user => user.Email, (f, user) => f.Internet.Email(user.Name))
                 .RuleFor(user => user.Password, _ => encryption.Encrypt(password));
 
