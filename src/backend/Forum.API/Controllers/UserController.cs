@@ -1,5 +1,6 @@
 ﻿using Forum.API.Attributes;
 using Forum.Application.UseCases.User.Change_Password;
+using Forum.Application.UseCases.User.Image;
 using Forum.Application.UseCases.User.Register;
 using Forum.Application.UseCases.User.Update;
 using Forum.Communication.Request;
@@ -44,6 +45,19 @@ namespace Forum.API.Controllers
             [FromBody] RequestChangePasswordJson request)
         {
             await useCase.Execute(request);
+
+            return NoContent();
+        }
+
+        [HttpPut("update-photo")]
+        [ProducesResponseType(StatusCodes.Status204NoContent)]
+        [ProducesResponseType(typeof(ResponseErrorJson), StatusCodes.Status400BadRequest)]
+        [AuthenticatedUser]
+        public async Task<IActionResult> UpdateImage(
+            [FromServices] IAddUpdateImageUseCase useCase,
+            IFormFile file)
+        {
+            await useCase.Execute(file);
 
             return NoContent();
         }

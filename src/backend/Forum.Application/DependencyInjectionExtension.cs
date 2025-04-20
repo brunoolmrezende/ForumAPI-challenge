@@ -13,6 +13,7 @@ using Forum.Application.UseCases.Topic.GetById;
 using Forum.Application.UseCases.Topic.Register;
 using Forum.Application.UseCases.Topic.Update;
 using Forum.Application.UseCases.User.Change_Password;
+using Forum.Application.UseCases.User.Image;
 using Forum.Application.UseCases.User.Register;
 using Forum.Application.UseCases.User.Update;
 using Microsoft.Extensions.DependencyInjection;
@@ -32,6 +33,7 @@ namespace Forum.Application
             services.AddScoped<IRegisterUserUseCase, RegisterUserUseCase>();
             services.AddScoped<IUpdateUserUseCase, UpdateUserUseCase>();
             services.AddScoped<IChangePasswordUseCase, ChangePasswordUseCase>();
+            services.AddScoped<IAddUpdateImageUseCase, AddUpdateImageUseCase>();
 
             services.AddScoped<IUseRefreshTokenUseCase, UseRerfreshTokenUseCase>();
 
