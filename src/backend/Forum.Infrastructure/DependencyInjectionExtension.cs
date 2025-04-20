@@ -1,4 +1,5 @@
-﻿using FluentMigrator.Runner;
+﻿using CloudinaryDotNet;
+using FluentMigrator.Runner;
 using Forum.Domain.Repository;
 using Forum.Domain.Repository.Comment;
 using Forum.Domain.Repository.Like.TopicLike;
@@ -16,6 +17,7 @@ using Forum.Infrastructure.Security.AccessToken;
 using Forum.Infrastructure.Security.Cryptography;
 using Forum.Infrastructure.Security.RefreshToken;
 using Forum.Infrastructure.Services.LoggedUser;
+using Forum.Infrastructure.Services.Photo;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -39,6 +41,7 @@ namespace Forum.Infrastructure
 
             AddDbContext(services, configuration);
             AddFluentMigrator(services, configuration);
+            AddCloudinary(services, configuration);
         }
 
         private static void AddDbContext(IServiceCollection services, IConfiguration configuration)
@@ -91,6 +94,21 @@ namespace Forum.Infrastructure
         private static void AddLoggedUser(IServiceCollection services)
         {
             services.AddScoped<ILoggedUser, LoggedUser>();
+        }
+
+        private static void AddCloudinary(IServiceCollection services, IConfiguration configuration)
+        {
+            var cloudName = configuration.GetValue<string>("Settings:Cloudinary:CloudName");
+            var apiKey = configuration.GetValue<string>("Settings:Cloudinary:ApiKey");
+            var apiSecret = configuration.GetValue<string>("Settings:Cloudinary:ApiSecret");
+
+            var account = new Account(cloudName, apiKey, apiSecret);
+
+            var cloudinary = new Cloudinary(account) { Api = { Secure = true } };
+
+            services.AddSingleton(cloudinary);
+
+            services.AddScoped<IPhotoService>(options => new PhotoService(cloudinary));
         }
 
         private static void AddFluentMigrator(IServiceCollection services, IConfiguration configuration)
