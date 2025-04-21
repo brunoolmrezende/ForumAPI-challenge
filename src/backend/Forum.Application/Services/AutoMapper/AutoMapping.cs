@@ -37,6 +37,11 @@ namespace Forum.Application.Services.AutoMapper
                 .ForMember(dest => dest.TotalLikes, opt => opt.MapFrom(src => src.Likes.Count))
                 .ForMember(dest => dest.Comments, opt => opt.MapFrom(src => src.Comments))
                 .ForMember(dest => dest.TotalComments, opt => opt.MapFrom(src => src.Comments.Count));
+
+            CreateMap<User, ResponseUserProfileJson>()
+                 .ForMember(dest => dest.TopicsCount, opt => opt.MapFrom(src => src.Topics.Count))
+                 .ForMember(dest => dest.CommentsCount, opt => opt.MapFrom(src => src.Comments.Count));
+
         }
     }
 }

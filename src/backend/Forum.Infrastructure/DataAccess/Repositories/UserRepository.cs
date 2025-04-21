@@ -34,6 +34,16 @@ namespace Forum.Infrastructure.DataAccess.Repositories
 
         }
 
+        public async Task<User> GetProfile(long id)
+        {
+            return await _dbContext
+                .Users
+                .AsNoTracking()
+                .Include(user => user.Topics)
+                .Include(user => user.Comments)
+                .FirstAsync(user => user.Id.Equals(id) && user.Active);
+        }
+
         public void Update(User user)
         {
             _dbContext.Users.Update(user);

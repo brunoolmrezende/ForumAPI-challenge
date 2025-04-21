@@ -2,6 +2,7 @@
 using Forum.Application.UseCases.User.Change_Password;
 using Forum.Application.UseCases.User.Delete_Image;
 using Forum.Application.UseCases.User.Image;
+using Forum.Application.UseCases.User.Profile;
 using Forum.Application.UseCases.User.Register;
 using Forum.Application.UseCases.User.Update;
 using Forum.Communication.Request;
@@ -73,6 +74,17 @@ namespace Forum.API.Controllers
             await useCase.Execute();
 
             return NoContent();
+        }
+
+        [HttpGet]
+        [ProducesResponseType(typeof(ResponseUserProfileJson), StatusCodes.Status200OK)]
+        [AuthenticatedUser]
+        public async Task<IActionResult> GetUserProfile(
+            [FromServices] IGetUserProfileUseCase useCase)
+        {
+            var response = await useCase.Execute();
+
+            return Ok(response);
         }
 
     }

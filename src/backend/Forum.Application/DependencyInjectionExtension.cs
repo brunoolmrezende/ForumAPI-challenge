@@ -15,6 +15,7 @@ using Forum.Application.UseCases.Topic.Update;
 using Forum.Application.UseCases.User.Change_Password;
 using Forum.Application.UseCases.User.Delete_Image;
 using Forum.Application.UseCases.User.Image;
+using Forum.Application.UseCases.User.Profile;
 using Forum.Application.UseCases.User.Register;
 using Forum.Application.UseCases.User.Update;
 using Microsoft.Extensions.DependencyInjection;
@@ -36,6 +37,7 @@ namespace Forum.Application
             services.AddScoped<IChangePasswordUseCase, ChangePasswordUseCase>();
             services.AddScoped<IAddUpdateImageUseCase, AddUpdateImageUseCase>();
             services.AddScoped<IDeleteImageUseCase, DeleteImageUseCase>();
+            services.AddScoped<IGetUserProfileUseCase, GetUserProfileUseCase>();
 
             services.AddScoped<IUseRefreshTokenUseCase, UseRerfreshTokenUseCase>();
 
