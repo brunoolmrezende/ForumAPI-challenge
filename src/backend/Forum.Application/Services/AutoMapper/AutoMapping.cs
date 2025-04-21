@@ -28,13 +28,15 @@ namespace Forum.Application.Services.AutoMapper
             CreateMap<Comment, ResponseRegisteredCommentJson>();
 
             CreateMap<Comment, ResponseCommentJson>()
-                .ForMember(dest => dest.Author, opt => opt.MapFrom(src => src.User.Name));
+                .ForMember(dest => dest.Author, opt => opt.MapFrom(src => src.User.Name))
+                .ForMember(dest => dest.AuthorPhotoUrl, opt => opt.MapFrom(src => src.User.ImageUrl));
 
             CreateMap<User, ResponseUserSummaryJson>();
 
             CreateMap<Topic, ResponseTopicDetailsJson>()
                 .ForMember(dest => dest.TotalLikes, opt => opt.MapFrom(src => src.Likes.Count))
-                .ForMember(dest => dest.Comments, opt => opt.MapFrom(src => src.Comments));
+                .ForMember(dest => dest.Comments, opt => opt.MapFrom(src => src.Comments))
+                .ForMember(dest => dest.TotalComments, opt => opt.MapFrom(src => src.Comments.Count));
         }
     }
 }

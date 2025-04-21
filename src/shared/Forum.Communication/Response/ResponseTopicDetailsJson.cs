@@ -13,5 +13,6 @@
         public bool LikedByCurrentUser { get; set; }
 
         public List<ResponseCommentJson> Comments { get; set; } = [];
+        public int TotalComments { get; set; }
     }
 }
