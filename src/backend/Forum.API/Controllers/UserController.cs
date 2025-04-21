@@ -1,5 +1,6 @@
 ﻿using Forum.API.Attributes;
 using Forum.Application.UseCases.User.Change_Password;
+using Forum.Application.UseCases.User.Delete_Image;
 using Forum.Application.UseCases.User.Image;
 using Forum.Application.UseCases.User.Register;
 using Forum.Application.UseCases.User.Update;
@@ -61,5 +62,18 @@ namespace Forum.API.Controllers
 
             return NoContent();
         }
+
+        [HttpDelete("delete-photo")]
+        [ProducesResponseType(StatusCodes.Status204NoContent)]
+        [ProducesResponseType(typeof(ResponseErrorJson), StatusCodes.Status404NotFound)]
+        [AuthenticatedUser]
+        public async Task<IActionResult> DeleteImage(
+            [FromServices] IDeleteImageUseCase useCase)
+        {
+            await useCase.Execute();
+
+            return NoContent();
+        }
+
     }
 }

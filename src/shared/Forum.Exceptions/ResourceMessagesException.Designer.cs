@@ -252,6 +252,15 @@ namespace Forum.Exceptions {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to The user does not have a photo to remove..
+        /// </summary>
+        public static string USER_DOES_NOT_HAVE_PHOTO {
+            get {
+                return ResourceManager.GetString("USER_DOES_NOT_HAVE_PHOTO", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to User does not have permission to access this resource..
         /// </summary>
         public static string USER_WITHOUT_PERMISSION_ACCESS_RESOURCE {
