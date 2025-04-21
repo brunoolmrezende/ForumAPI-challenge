@@ -8,20 +8,16 @@ using WebApi.Test.InlineData;
 
 namespace WebApi.Test.User.Register
 {
-    public class RegisterUserTest : ForumClassFixture
+    public class RegisterUserTest(CustomWebApplicationFactory factory) : ForumClassFixture(factory)
     {
         private readonly string _endpoint = "user";
-
-        public RegisterUserTest(CustomWebApplicationFactory factory) : base(factory)
-        {
-        }
 
         [Fact]
         public async Task Success()
         {
-            var request = RequestRegisterUserJsonBuilder.Build();
+            var request = RequestRegisterUserFormDataBuilder.Build();
 
-            var response = await DoPost(_endpoint, request);
+            var response = await DoPostFormData(endpoint: _endpoint, request: request);
 
             response.StatusCode.Should().Be(HttpStatusCode.Created);
 
@@ -31,16 +27,17 @@ namespace WebApi.Test.User.Register
 
             responseData.RootElement.GetProperty("name").GetString().Should().Be(request.Name);
             responseData.RootElement.GetProperty("tokens").GetProperty("accessToken").GetString().Should().NotBeNullOrEmpty();
+            responseData.RootElement.GetProperty("tokens").GetProperty("refreshToken").GetString().Should().NotBeNullOrEmpty();
         }
 
         [Theory]
         [ClassData(typeof(CultureInlineDataTest))]
         public async Task Error_Empty_Name(string culture)
         {
-            var request = RequestRegisterUserJsonBuilder.Build();
+            var request = RequestRegisterUserFormDataBuilder.Build();
             request.Name = string.Empty;
 
-            var response = await DoPost(endpoint: _endpoint, request: request, culture: culture);
+            var response = await DoPostFormData(endpoint: _endpoint, request: request, culture: culture);
 
             response.StatusCode.Should().Be(HttpStatusCode.BadRequest);
 

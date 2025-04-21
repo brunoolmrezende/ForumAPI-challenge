@@ -13,13 +13,16 @@ namespace CommonTestUtilities.Services.Photo
 
         public PhotoServiceBuilder() => _mock = new Mock<IPhotoService>();
 
-        public PhotoServiceBuilder UploadImage(IFormFile file, User user, string filename)
+        public PhotoServiceBuilder UploadImage(IFormFile? file, User user, string filename)
         {
-            _mock.Setup(x => x.UploadImage(file, user, It.IsAny<string>())).ReturnsAsync(new ImageUploadResultDto
+            if (file is not null)
             {
-                PublicId = $"{user.UserIdentifier}/{filename}",
-                Url = new Faker().Internet.Url()
-            });
+                _mock.Setup(x => x.UploadImage(file, It.IsAny<User>(), It.IsAny<string>())).ReturnsAsync(new ImageUploadResultDto
+                {
+                    PublicId = $"{user.UserIdentifier}/{filename}",
+                    Url = new Faker().Internet.Url()
+                });
+            }
 
             return this;
         }

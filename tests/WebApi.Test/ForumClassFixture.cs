@@ -19,6 +19,15 @@ namespace WebApi.Test
             return await _httpClient.PostAsJsonAsync(endpoint, request);
         }
 
+        protected async Task<HttpResponseMessage> DoPostFormData(string endpoint, object request, string culture = "en")
+        {
+            ChangeRequestCulture(culture);
+
+            var formContent = BuildFormDataContent(request);
+
+            return await _httpClient.PostAsync(endpoint, formContent);
+        }
+
         protected async Task<HttpResponseMessage> DoPut(string endpoint, object request, string token = "", string culture = "en")
         {
             ChangeRequestCulture(culture);
@@ -61,6 +70,27 @@ namespace WebApi.Test
             }
 
             _httpClient.DefaultRequestHeaders.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", token);
+        }
+
+        private static MultipartFormDataContent BuildFormDataContent(object request)
+        {
+            var multipartContent = new MultipartFormDataContent();
+
+            var requestProperties = request.GetType().GetProperties().ToList();
+
+            foreach (var property in requestProperties)
+            {
+                var propertyValue = property.GetValue(request);
+
+                if (string.IsNullOrWhiteSpace(propertyValue?.ToString()))
+                {
+                    continue;
+                }
+
+                multipartContent.Add(new StringContent(propertyValue.ToString()!), property.Name);
+            }
+
+            return multipartContent;
         }
     }
 }

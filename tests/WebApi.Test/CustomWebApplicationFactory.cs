@@ -1,5 +1,7 @@
 ﻿using CommonTestUtilities.Entities;
+using CommonTestUtilities.Services.Photo;
 using Forum.Infrastructure.DataAccess;
+using Forum.Infrastructure.Services.Photo;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc.Testing;
 using Microsoft.EntityFrameworkCore;
@@ -29,6 +31,9 @@ namespace WebApi.Test
                     }
 
                     var provider = services.AddEntityFrameworkInMemoryDatabase().BuildServiceProvider();
+
+                    var photoService = new PhotoServiceBuilder().Build();
+                    services.AddScoped(option => photoService);
 
                     services.AddDbContext<ForumDbContext>(options =>
                     {
