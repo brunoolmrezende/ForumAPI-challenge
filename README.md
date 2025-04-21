@@ -24,15 +24,20 @@ A aplicação possui autenticação baseada em **JWT** e validações robustas d
 ### 🔐 Autenticação necessária
 
 - `POST /login` — Autenticação do usuário
+  
 - `PUT /user` — Atualizar usuário
 - `PUT /user/change-password` — Atualizar senha do usuário
 - `PUT /user/update-photo` — Atualizar foto do usuário
+- `DELETE /user/delete-photo` — Deletar foto do usuário
+  
 - `POST /topic` — Criar novo tópico
 - `PUT /topic/{id}` — Atualizar tópico (somente autor)
 - `DELETE /topic/{id}` — Excluir tópico (somente autor)
+  
 - `POST /comment/{topicId}` — Criar comentário
 - `PUT /comment/{topicId}/{commentId}` — Atualizar comentário (somente autor)
 - `DELETE /comment/{topicId}/{commentId}` — Deletar comentário (somente autor)
+
 - `POST /like/{topicId}` — Curtir/descurtir tópico
 
 ### ✅ Acesso público
