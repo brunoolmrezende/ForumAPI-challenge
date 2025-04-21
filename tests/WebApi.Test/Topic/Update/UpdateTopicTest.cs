@@ -12,7 +12,7 @@ namespace WebApi.Test.Topic.Update
     public class UpdateTopicTest : ForumClassFixture
     {
         private const string _endpoint = "topic";
-        private Guid _identifier;
+        private readonly Guid _identifier;
         private readonly long _topicId;
 
         public UpdateTopicTest(CustomWebApplicationFactory factory) : base(factory)

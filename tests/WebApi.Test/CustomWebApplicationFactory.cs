@@ -54,6 +54,10 @@ namespace WebApi.Test
         public string GetEmail() => _user.Email;
         public string GetPassword() => _password;
         public Guid GetIdentifier() => _user.UserIdentifier;
+        public string GetImageUrl() => _user.ImageUrl!;
+        public int GetTopicsCount() => _user.Topics.Count;
+        public int GetCommentsCount() => _user.Comments.Count;
+
         public Guid GetIdentifierFromUserWithoutPhoto() => _userWithoutPhoto.UserIdentifier;
 
         public Forum.Domain.Entities.Topic GetTopic() => _topic;
