@@ -19,25 +19,40 @@ A aplicação possui autenticação baseada em **JWT** e validações robustas d
 
 ---
 
+## ☁️ Upload de Fotos com Cloudinary
+
+O projeto possui suporte a upload e gerenciamento de fotos de perfil por meio do serviço externo Cloudinary.
+
+Para que o recurso funcione corretamente, é necessário configurar as seguintes chaves no arquivo de configuração (appsettings.json):
+
+``` bash
+"Cloudinary": {
+  "CloudName": "your_cloud_name",
+  "ApiKey": "your_api_key",
+  "ApiSecret": "your_api_secret"
+}
+```
+
+As fotos são automaticamente redimensionadas e otimizadas antes de serem disponibilizadas por URL pública, facilitando a exibição no frontend.
+
+---
+
 ## 📚 Endpoints Disponíveis
 
 ### 🔐 Autenticação necessária
 
 - `POST /login` — Autenticação do usuário
-  
+- `GET /user` — Obter perfil do usuário
 - `PUT /user` — Atualizar usuário
 - `PUT /user/change-password` — Atualizar senha do usuário
 - `PUT /user/update-photo` — Atualizar foto do usuário
 - `DELETE /user/delete-photo` — Deletar foto do usuário
-  
 - `POST /topic` — Criar novo tópico
 - `PUT /topic/{id}` — Atualizar tópico (somente autor)
 - `DELETE /topic/{id}` — Excluir tópico (somente autor)
-  
 - `POST /comment/{topicId}` — Criar comentário
 - `PUT /comment/{topicId}/{commentId}` — Atualizar comentário (somente autor)
 - `DELETE /comment/{topicId}/{commentId}` — Deletar comentário (somente autor)
-
 - `POST /like/{topicId}` — Curtir/descurtir tópico
 
 ### ✅ Acesso público
