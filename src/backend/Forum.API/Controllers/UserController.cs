@@ -16,7 +16,7 @@ namespace Forum.API.Controllers
         [ProducesResponseType(typeof(ResponseErrorJson), StatusCodes.Status400BadRequest)]
         public async Task<IActionResult> Register(
             [FromServices] IRegisterUserUseCase useCase,
-            [FromBody] RequestRegisterUserJson request)
+            [FromForm] RequestRegisterUserFormData request)
         {
             var response = await useCase.Execute(request);
 

@@ -5,6 +5,6 @@ namespace Forum.Application.UseCases.User.Register
 {
     public interface IRegisterUserUseCase
     {
-        Task<ResponseRegisteredUserJson> Execute(RequestRegisterUserJson request);
+        Task<ResponseRegisteredUserJson> Execute(RequestRegisterUserFormData request);
     }
 }

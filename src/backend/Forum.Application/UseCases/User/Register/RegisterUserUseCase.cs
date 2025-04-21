@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using FluentValidation.Results;
+using Forum.Application.Extensions;
 using Forum.Communication.Request;
 using Forum.Communication.Response;
 using Forum.Domain.Entities;
@@ -9,6 +10,7 @@ using Forum.Domain.Repository.User;
 using Forum.Domain.Security.AccessToken;
 using Forum.Domain.Security.Cryptography;
 using Forum.Domain.Security.RefreshToken;
+using Forum.Domain.Services;
 using Forum.Exceptions;
 using Forum.Exceptions.ExceptionBase;
 
@@ -22,7 +24,8 @@ namespace Forum.Application.UseCases.User.Register
         IUserReadOnlyRepository userReadOnlyRepository,
         IAccessTokenGenerator accessToken,
         IRefreshTokenGenerator refreshTokenGenerator,
-        ITokenRepository tokenRepository) : IRegisterUserUseCase
+        ITokenRepository tokenRepository,
+        IPhotoService photoService) : IRegisterUserUseCase
     {
         private readonly IMapper _mapper = mapper;
         private readonly IUserWriteOnlyRepository _userWriteOnlyRepository = userWriteOnlyRepository;
@@ -32,8 +35,9 @@ namespace Forum.Application.UseCases.User.Register
         private readonly IAccessTokenGenerator _accessToken = accessToken;
         private readonly IRefreshTokenGenerator _refreshTokenGenerator = refreshTokenGenerator;
         private readonly ITokenRepository _tokenRepository = tokenRepository;
+        private readonly IPhotoService _photoService = photoService;
 
-        public async Task<ResponseRegisteredUserJson> Execute(RequestRegisterUserJson request)
+        public async Task<ResponseRegisteredUserJson> Execute(RequestRegisterUserFormData request)
         {
             await Validate(request);
 
@@ -41,6 +45,23 @@ namespace Forum.Application.UseCases.User.Register
 
             user.Password = _encryption.Encrypt(request.Password);
             user.UserIdentifier = Guid.NewGuid();
+
+            if (request.Image is not null)
+            {
+                var file = request.Image.OpenReadStream();
+
+                var isValidImage = file.ValidateImageExtension();
+
+                if (isValidImage is false)
+                {
+                    throw new ErrorOnValidationException([ResourceMessagesException.ONLY_IMAGES_ACCEPTED]);
+                }
+
+                var imageUploadResult = await _photoService.UploadImage(request.Image, user, filename: Guid.NewGuid().ToString());
+
+                user.ImageIdentifier = imageUploadResult.PublicId;
+                user.ImageUrl = imageUploadResult.Url;
+            }
 
             await _userWriteOnlyRepository.Add(user);
             await _unitOfWork.Commit();
@@ -72,7 +93,7 @@ namespace Forum.Application.UseCases.User.Register
             return refreshToken.Value;
         }
 
-        private async Task Validate(RequestRegisterUserJson request)
+        private async Task Validate(RequestRegisterUserFormData request)
         {
             var validator = new RegisterUserValidator();
 
