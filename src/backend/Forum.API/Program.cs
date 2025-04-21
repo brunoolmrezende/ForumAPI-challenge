@@ -93,11 +93,13 @@ void MigrateDatabase()
         return;
     }
 
+    var databaseType = builder.Configuration.DatabaseType();
+
     var connectionString = builder.Configuration.ConnectionString();
 
     var serviceScope = app.Services.GetRequiredService<IServiceScopeFactory>().CreateScope();
 
-    DatabaseMigration.Migrate(connectionString, serviceScope.ServiceProvider);
+    DatabaseMigration.Migrate(databaseType, connectionString, serviceScope.ServiceProvider);
 }
 
 public partial class Program

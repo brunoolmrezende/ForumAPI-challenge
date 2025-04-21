@@ -39,18 +39,39 @@ namespace Forum.Infrastructure
                 return;
             }
 
-            AddDbContext(services, configuration);
-            AddFluentMigrator(services, configuration);
+            var databaseType = configuration.DatabaseType();
+
+            if (databaseType == Domain.Enums.DatabaseType.SqlServer)
+            {
+                AddDbContext_SqlServer(services, configuration);
+                AddFluentMigrator_SqlServer(services, configuration);
+            }
+            else
+            {
+                AddDbContext_PostgreSql(services, configuration);
+                AddFluentMigrator_PostgreSql(services, configuration);
+            }
+
             AddCloudinary(services, configuration);
         }
 
-        private static void AddDbContext(IServiceCollection services, IConfiguration configuration)
+        private static void AddDbContext_SqlServer(IServiceCollection services, IConfiguration configuration)
         {
             var connectionString = configuration.ConnectionString();
 
             services.AddDbContext<ForumDbContext>(dbContextOptions =>
             {
                 dbContextOptions.UseSqlServer(connectionString);
+            });
+        }
+
+        private static void AddDbContext_PostgreSql(IServiceCollection services, IConfiguration configuration)
+        {
+            var connectionString = configuration.ConnectionString();
+
+            services.AddDbContext<ForumDbContext>(dbContextOptions =>
+            {
+                dbContextOptions.UseNpgsql(connectionString);
             });
         }
 
@@ -111,7 +132,7 @@ namespace Forum.Infrastructure
             services.AddScoped<IPhotoService>(options => new PhotoService(cloudinary));
         }
 
-        private static void AddFluentMigrator(IServiceCollection services, IConfiguration configuration)
+        private static void AddFluentMigrator_SqlServer(IServiceCollection services, IConfiguration configuration)
         {
             var connectionString = configuration.ConnectionString();
 
@@ -119,6 +140,19 @@ namespace Forum.Infrastructure
             {
                 options
                 .AddSqlServer()
+                .WithGlobalConnectionString(connectionString)
+                .ScanIn(Assembly.Load("Forum.Infrastructure")).For.All();
+            });
+        }
+
+        private static void AddFluentMigrator_PostgreSql(IServiceCollection services, IConfiguration configuration)
+        {
+            var connectionString = configuration.ConnectionString();
+
+            services.AddFluentMigratorCore().ConfigureRunner(options =>
+            {
+                options
+                .AddPostgres()
                 .WithGlobalConnectionString(connectionString)
                 .ScanIn(Assembly.Load("Forum.Infrastructure")).For.All();
             });
