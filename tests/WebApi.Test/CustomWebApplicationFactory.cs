@@ -1,7 +1,6 @@
 ﻿using CommonTestUtilities.Entities;
 using CommonTestUtilities.Services.Photo;
 using Forum.Infrastructure.DataAccess;
-using Forum.Infrastructure.Services.Photo;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc.Testing;
 using Microsoft.EntityFrameworkCore;
@@ -12,6 +11,7 @@ namespace WebApi.Test
     public class CustomWebApplicationFactory : WebApplicationFactory<Program>
     {
         private Forum.Domain.Entities.User _user = default!;
+        private Forum.Domain.Entities.User _userWithoutPhoto = default!;
         private Forum.Domain.Entities.Topic _topic = default!;
         private Forum.Domain.Entities.Comment _comment = default!;
         private Forum.Domain.Entities.TopicLike _topicLike = default!;
@@ -54,6 +54,7 @@ namespace WebApi.Test
         public string GetEmail() => _user.Email;
         public string GetPassword() => _password;
         public Guid GetIdentifier() => _user.UserIdentifier;
+        public Guid GetIdentifierFromUserWithoutPhoto() => _userWithoutPhoto.UserIdentifier;
 
         public Forum.Domain.Entities.Topic GetTopic() => _topic;
         public long GetTopicId() => _topic.Id;
@@ -68,6 +69,11 @@ namespace WebApi.Test
         {
             (_user, _password) = UserBuilder.Build();
 
+            (_userWithoutPhoto, _) = UserBuilder.Build();
+            _userWithoutPhoto.ImageIdentifier = null;
+            _userWithoutPhoto.ImageUrl = null;
+            _userWithoutPhoto.Id = 2;
+
             _topic = TopicBuilder.Build(_user);
 
             _comment = CommentBuilder.Build(_user, _topic.Id);
@@ -78,6 +84,7 @@ namespace WebApi.Test
 
             dbContext.Database.EnsureCreated();
             dbContext.Users.Add(_user);
+            dbContext.Users.Add(_userWithoutPhoto);
             dbContext.Topics.Add(_topic);
             dbContext.Comments.Add(_comment);
             dbContext.TopicLikes.Add(_topicLike);
