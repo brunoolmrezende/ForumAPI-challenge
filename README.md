@@ -26,6 +26,7 @@ A aplicação possui autenticação baseada em **JWT** e validações robustas d
 - `POST /login` — Autenticação do usuário
 - `PUT /user` — Atualizar usuário
 - `PUT /user/change-password` — Atualizar senha do usuário
+- `PUT /user/update-photo` — Atualizar foto do usuário
 - `POST /topic` — Criar novo tópico
 - `PUT /topic/{id}` — Atualizar tópico (somente autor)
 - `DELETE /topic/{id}` — Excluir tópico (somente autor)
