@@ -16,6 +16,7 @@ using Forum.Infrastructure.Extensions;
 using Forum.Infrastructure.Security.AccessToken;
 using Forum.Infrastructure.Security.Cryptography;
 using Forum.Infrastructure.Security.RefreshToken;
+using Forum.Infrastructure.Services.DeleteUserQueue;
 using Forum.Infrastructure.Services.LoggedUser;
 using Forum.Infrastructure.Services.Photo;
 using Microsoft.EntityFrameworkCore;
@@ -33,6 +34,7 @@ namespace Forum.Infrastructure
             AddPasswordEncrypter(services);
             AddTokens(services, configuration);
             AddLoggedUser(services);
+            AddQueue(services, configuration);
 
             if (configuration.IsUnitTestEnviroment())
             {
@@ -130,6 +132,14 @@ namespace Forum.Infrastructure
             services.AddSingleton(cloudinary);
 
             services.AddScoped<IPhotoService>(options => new PhotoService(cloudinary));
+        }
+
+        private static void AddQueue(this IServiceCollection services, IConfiguration configuration)
+        {
+            var connection = configuration.GetValue<string>("Settings:RabbitMQ:Connection")!;
+            var queueName = configuration.GetValue<string>("Settings:RabbitMQ:QueueName")!;
+
+            services.AddScoped<IDeleteUserQueue>(options => new DeleteUserQueue(connection, queueName));
         }
 
         private static void AddFluentMigrator_SqlServer(IServiceCollection services, IConfiguration configuration)

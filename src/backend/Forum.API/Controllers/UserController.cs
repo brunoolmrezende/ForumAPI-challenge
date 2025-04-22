@@ -1,5 +1,6 @@
 ﻿using Forum.API.Attributes;
 using Forum.Application.UseCases.User.Change_Password;
+using Forum.Application.UseCases.User.Delete.Request;
 using Forum.Application.UseCases.User.Delete_Image;
 using Forum.Application.UseCases.User.Image;
 using Forum.Application.UseCases.User.Profile;
@@ -87,5 +88,15 @@ namespace Forum.API.Controllers
             return Ok(response);
         }
 
+        [HttpDelete("account")]
+        [ProducesResponseType(StatusCodes.Status204NoContent)]
+        [AuthenticatedUser]
+        public async Task<IActionResult> DeleteAccount(
+            [FromServices] IRequestDeleteUserUseCase useCase)
+        {
+            await useCase.Execute();
+
+            return NoContent();
+        }
     }
 }
