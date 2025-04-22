@@ -82,6 +82,7 @@ namespace Forum.Infrastructure
             services.AddScoped<IUserWriteOnlyRepository, UserRepository>();
             services.AddScoped<IUserReadOnlyRepository, UserRepository>();
             services.AddScoped<IUserUpdateOnlyRepository, UserRepository>();
+            services.AddScoped<IUserDeleteOnlyRepository, UserRepository>();
 
             services.AddScoped<ITopicWriteOnlyRepository, TopicRepository>();
             services.AddScoped<ITopicUpdateOnlyRepository, TopicRepository>();

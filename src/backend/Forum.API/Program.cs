@@ -1,3 +1,4 @@
+using Forum.API.BackgroundServices;
 using Forum.API.Converters;
 using Forum.API.Filters;
 using Forum.API.Middleware;
@@ -64,6 +65,18 @@ builder.Services.AddScoped<ITokenProvider, HttpContextTokenValue>();
 builder.Services.AddRouting(options => options.LowercaseUrls =  true);
 
 builder.Services.AddHttpContextAccessor();
+
+if (!builder.Configuration.IsUnitTestEnviroment())
+{
+    var connection = builder.Configuration.GetValue<string>("Settings:RabbitMQ:Connection")!;
+    var queueName = builder.Configuration.GetValue<string>("Settings:RabbitMQ:QueueName")!;
+
+    builder.Services.AddHostedService(provider =>
+    {
+        var logger = provider.GetRequiredService<ILogger<DeleteUserService>>();
+        return new DeleteUserService(connection, queueName, provider, logger);
+    });
+}
 
 var app = builder.Build();
 
