@@ -26,6 +26,20 @@ namespace CommonTestUtilities.Repositories
             return this;
         }
 
+        public UserReadOnlyRepositoryBuilder GetByIdentifier(User user)
+        {
+            _mock.Setup(repository => repository.GetByIdentifier(user.UserIdentifier)).ReturnsAsync(user);
+
+            return this;
+        }
+
+        public UserReadOnlyRepositoryBuilder GetProfile(User user)
+        {
+            _mock.Setup(repository => repository.GetProfile(user.Id)).ReturnsAsync(user);
+
+            return this;
+        }
+
         public IUserReadOnlyRepository Build() => _mock.Object;
     }
 }
