@@ -1,6 +1,7 @@
 ﻿using CommonTestUtilities.AutoMapper;
 using CommonTestUtilities.Entities;
 using CommonTestUtilities.LoggedUser;
+using CommonTestUtilities.Repositories;
 using FluentAssertions;
 using Forum.Application.UseCases.User.Profile;
 
@@ -28,9 +29,10 @@ namespace UseCases.Test.User.Profile
         private static GetUserProfileUseCase CreateUseCase(Forum.Domain.Entities.User user)
         {
             var loggedUser = LoggedUserBuilder.Build(user);
+            var repository = new UserReadOnlyRepositoryBuilder().GetProfile(user).Build();
             var mapper = MapperBuilder.Build();
 
-            return new GetUserProfileUseCase(loggedUser, mapper);
+            return new GetUserProfileUseCase(loggedUser, repository, mapper);
         }
     }
 }
