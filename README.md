@@ -37,6 +37,29 @@ As fotos são automaticamente redimensionadas e otimizadas antes de serem dispon
 
 ---
 
+## 📩 Orquestração de Exclusão de Conta com RabbitMQ (CloudAMQP)
+
+Para tornar o processo de exclusão de conta mais resiliente e desacoplado, o projeto utiliza o RabbitMQ como broker de mensagens, por meio do serviço gerenciado CloudAMQP.
+
+Através dessa abordagem baseada em filas, a exclusão de conta é orquestrada da seguinte forma:
+
+1. Ao solicitar a exclusão, o usuário é inativado imediatamente.
+
+2. Em seguida, uma mensagem é publicada na fila com o identificador do usuário.
+
+3. Um serviço em segundo plano (implementado com BackgroundService) consome essa mensagem e realiza, de forma assíncrona, a exclusão definitiva dos dados do usuário e suas respectivas imagens no Cloudinary.
+
+Para que o recurso funcione corretamente, é necessário configurar as seguintes chaves no arquivo de configuração (appsettings.json):
+
+``` bash
+"RabbitMQ": {
+  "Connection": "your_connection_url",
+  "QueueName": "your_queue_name"
+}
+```
+
+---
+
 ## 📚 Endpoints Disponíveis
 
 ### 🔐 Autenticação necessária
@@ -47,6 +70,7 @@ As fotos são automaticamente redimensionadas e otimizadas antes de serem dispon
 - `PUT /user/change-password` — Atualizar senha do usuário
 - `PUT /user/update-photo` — Atualizar foto do usuário
 - `DELETE /user/delete-photo` — Deletar foto do usuário
+- `DELETE /user/account` — Solicitar exclusão de conta do usuário
 - `POST /topic` — Criar novo tópico
 - `PUT /topic/{id}` — Atualizar tópico (somente autor)
 - `DELETE /topic/{id}` — Excluir tópico (somente autor)
