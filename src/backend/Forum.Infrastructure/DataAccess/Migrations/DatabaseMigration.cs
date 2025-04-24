@@ -4,7 +4,6 @@ using Forum.Domain.Enums;
 using Microsoft.Data.SqlClient;
 using Microsoft.Extensions.DependencyInjection;
 using Npgsql;
-using System;
 
 namespace Forum.Infrastructure.DataAccess.Migrations
 {
