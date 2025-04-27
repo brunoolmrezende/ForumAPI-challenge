@@ -58,6 +58,23 @@ Para que o recurso funcione corretamente, é necessário configurar as seguintes
 }
 ```
 
+## 🛡️ Trilhas de Auditoria
+
+O projeto implementa um sistema de trilha de auditoria automática através da sobreposição do método SaveChangesAsync no DbContext.
+Sempre que uma entidade for criada, atualizada ou removida, um registro de auditoria (Audit) é automaticamente gerado contendo:
+
+- Tipo de operação realizada (Insert, Update, Delete);
+
+- Nome da tabela afetada;
+
+- Data e hora em que a operação foi realizada;
+
+- Identificador do registro alterado;
+
+- Lista de alterações nos campos (AuditEntry);
+
+Essa abordagem proporciona rastreabilidade completa das modificações no sistema, mantendo a separação de responsabilidades entre as camadas e eliminando a necessidade de código repetitivo de auditoria nos casos de uso.
+
 ---
 
 ## 📚 Endpoints Disponíveis
