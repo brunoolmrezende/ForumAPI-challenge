@@ -6,8 +6,8 @@
         public string Email { get; set; } = string.Empty;
         public string Password { get; set; } = string.Empty;
         public Guid UserIdentifier { get; set; }
-        public string? ImageIdentifier { get; set; } = string.Empty;
-        public string? ImageUrl { get; set; } = string.Empty;
+        public string? ImageIdentifier { get; set; }
+        public string? ImageUrl { get; set; }
 
         public IList<Topic> Topics { get; set; } = [];
         public IList<Comment> Comments { get; set; } = [];
