@@ -81,7 +81,6 @@ Essa abordagem proporciona rastreabilidade completa das modificações no sistem
 
 ### 🔐 Autenticação necessária
 
-- `POST /login` — Autenticação do usuário
 - `GET /user` — Obter perfil do usuário
 - `PUT /user` — Atualizar usuário
 - `PUT /user/change-password` — Atualizar senha do usuário
@@ -98,6 +97,7 @@ Essa abordagem proporciona rastreabilidade completa das modificações no sistem
 
 ### ✅ Acesso público
 
+- `POST /login` — Autenticação do usuário
 - `POST /user` — Criar novo usuário
 - `GET /forum` — Listar todos os tópicos com detalhes completos
 - `GET /topic/{id}` — Obter um tópico específico com seus comentários
