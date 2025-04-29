@@ -1,13 +1,13 @@
 # 🗣️ Fórum API
 
-API RESTful desenvolvida com **.NET 8** para gerenciamento de um fórum de discussões, permitindo que usuários criem tópicos, comentem, curtam e filtrem discussões com base em parâmetros dinâmicos.  
+API RESTful desenvolvida com **.NET 9** para gerenciamento de um fórum de discussões, permitindo que usuários criem tópicos, comentem, curtam e filtrem discussões com base em parâmetros dinâmicos.  
 A aplicação possui autenticação baseada em **JWT** e validações robustas de entrada, além de **testes unitários e de integração**.
 
 ---
 
 ##  🚀 Tecnologias Utilizadas
 
-- **.NET 8**
+- **.NET 9**
 - **Entity Framework Core**
 - **FluentValidation**
 - **JWT Bearer Authentication**
