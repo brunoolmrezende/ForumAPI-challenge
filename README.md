@@ -91,8 +91,8 @@ Essa abordagem proporciona rastreabilidade completa das modificações no sistem
 - `PUT /topic/{id}` — Atualizar tópico (somente autor)
 - `DELETE /topic/{id}` — Excluir tópico (somente autor)
 - `POST /comment/{topicId}` — Criar comentário
-- `PUT /comment/{topicId}/{commentId}` — Atualizar comentário (somente autor)
-- `DELETE /comment/{topicId}/{commentId}` — Deletar comentário (somente autor)
+- `PUT /comment/{commentId}` — Atualizar comentário (somente autor)
+- `DELETE /comment/{commentId}` — Deletar comentário (somente autor)
 - `POST /like/{topicId}` — Curtir/descurtir tópico
 
 ### ✅ Acesso público
