@@ -2,6 +2,6 @@
 {
     public interface IDeleteCommentUseCase
     {
-        Task Execute(long topicId, long commentId);
+        Task Execute(long commentId);
     }
 }

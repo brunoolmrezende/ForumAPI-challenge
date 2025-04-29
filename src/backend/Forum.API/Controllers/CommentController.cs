@@ -33,7 +33,6 @@ namespace Forum.API.Controllers
         [ProducesResponseType(typeof(ResponseErrorJson), StatusCodes.Status404NotFound)]
         public async Task<IActionResult> Update(
             [FromServices] IUpdateCommentUseCase useCase,
-            [FromRoute]long topicId,
             [FromRoute] long commentId,
             [FromBody] RequestCommentJson request)
         {
@@ -43,15 +42,14 @@ namespace Forum.API.Controllers
         }
 
         [HttpDelete]
-        [Route("{topicId}/{commentId}")]
+        [Route("{commentId}")]
         [ProducesResponseType(StatusCodes.Status204NoContent)]
         [ProducesResponseType(typeof(ResponseErrorJson), StatusCodes.Status404NotFound)]
         public async Task<IActionResult> Delete(
             [FromServices] IDeleteCommentUseCase useCase,
-            [FromRoute] long topicId,
             [FromRoute] long commentId)
         {
-            await useCase.Execute(topicId, commentId);
+            await useCase.Execute(commentId);
 
             return NoContent();
         }
