@@ -1,48 +1,26 @@
-﻿using Forum.Application.UseCases.User.Delete.Delete_User_Account;
+﻿using System.Text;
+using Forum.Application.UseCases.User.Delete.Delete_User_Account;
 using RabbitMQ.Client;
 using RabbitMQ.Client.Events;
-using System.Text;
 
 namespace Forum.API.BackgroundServices
 {
-    public class DeleteUserService : BackgroundService
+    public class DeleteUserService(string connection, string queueName, IServiceProvider services, ILogger<DeleteUserService> logger) : BackgroundService
     {
-        private readonly string _connection;
-        private readonly string _queueName;
-        private readonly ConnectionFactory _factory;
-        private readonly IServiceProvider _services;
-        private readonly ILogger<DeleteUserService> _logger;
-
-        public DeleteUserService(string connection, string queueName, IServiceProvider services, ILogger<DeleteUserService> logger)
-        {
-            _logger = logger;
-            _connection = connection;
-            _queueName = queueName;
-            _factory = new ConnectionFactory { Uri = new Uri(_connection) };
-            _services = services;
-        }
+        private readonly string _connection = connection;
+        private readonly string _queueName = queueName;
+        private readonly IServiceProvider _services = services;
+        private readonly ILogger<DeleteUserService> _logger = logger;
 
         protected override async Task ExecuteAsync(CancellationToken stoppingToken)
         {
-            _logger.LogInformation("DeleteUserService started...");
+            _logger.LogInformation("Background Service is starting.");
 
-            using var connection = await _factory.CreateConnectionAsync();
-            using var channel = await connection.CreateChannelAsync();
+            (var channel, var consumer) = await GetConsumerAndChannel(stoppingToken);
 
-            await channel.QueueDeclareAsync(
-                queue: _queueName,
-                durable: true,
-                exclusive: false,
-                autoDelete: false,
-                arguments: null);
-
-            var consumer = new AsyncEventingBasicConsumer(channel);
             consumer.ReceivedAsync += Consumer_ReceivedAsync;
 
-            await channel.BasicConsumeAsync(
-                 queue: _queueName,
-                 autoAck: false,
-                 consumer: consumer);
+            await channel.BasicConsumeAsync(queue: _queueName, autoAck: false, consumer: consumer, cancellationToken: stoppingToken);
 
             await Task.Delay(Timeout.Infinite, stoppingToken);
         }
@@ -74,6 +52,23 @@ namespace Forum.API.BackgroundServices
                 _logger.LogError($"Error processing message: {ex.Message}");
                 await channel.BasicNackAsync(deliveryTag: eventArgs.DeliveryTag, multiple: false, requeue: false);
             }
+        }
+
+        private async Task<(IChannel, AsyncEventingBasicConsumer)> GetConsumerAndChannel(CancellationToken stoppingToken)
+        {
+            var connection = await CreateConnectionAsync();
+            var channel = await connection.CreateChannelAsync();
+
+            await channel.QueueDeclareAsync(queue: _queueName, durable: false, exclusive: false, autoDelete: false, arguments: null, cancellationToken: stoppingToken);
+
+            var consumer = new AsyncEventingBasicConsumer(channel);
+
+            return (channel, consumer);
+        }
+
+        private async Task<IConnection> CreateConnectionAsync()
+        {
+            return await new ConnectionFactory { Uri = new Uri(_connection) }.CreateConnectionAsync();
         }
     }
 }

@@ -25,7 +25,7 @@ namespace Forum.Infrastructure.Services.DeleteUserQueue
 
             await channel.QueueDeclareAsync(
                 queue: _queueName,
-                durable: true,
+                durable: false,
                 exclusive: false,
                 autoDelete: false,
                 arguments: null);

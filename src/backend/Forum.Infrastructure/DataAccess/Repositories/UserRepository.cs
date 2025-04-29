@@ -15,12 +15,7 @@ namespace Forum.Infrastructure.DataAccess.Repositories
 
         public async Task DeleteAccount(Guid userIdentifier)
         {
-            var user = await _dbContext.Users.FirstOrDefaultAsync(user => user.UserIdentifier.Equals(userIdentifier));
-
-            if (user is null)
-            {
-                return;
-            }
+            var user = await _dbContext.Users.FirstAsync(user => user.UserIdentifier.Equals(userIdentifier));
 
             DeleteRelatedData(user.Id);
 
