@@ -27,7 +27,7 @@ namespace Forum.API.Controllers
         }
 
         [HttpPut]
-        [Route("{topicId}/{commentId}")]
+        [Route("{commentId}")]
         [ProducesResponseType(StatusCodes.Status204NoContent)]
         [ProducesResponseType(typeof(ResponseErrorJson), StatusCodes.Status400BadRequest)]
         [ProducesResponseType(typeof(ResponseErrorJson), StatusCodes.Status404NotFound)]
@@ -37,7 +37,7 @@ namespace Forum.API.Controllers
             [FromRoute] long commentId,
             [FromBody] RequestCommentJson request)
         {
-            await useCase.Execute(topicId, commentId, request);
+            await useCase.Execute(commentId, request);
 
             return NoContent();
         }

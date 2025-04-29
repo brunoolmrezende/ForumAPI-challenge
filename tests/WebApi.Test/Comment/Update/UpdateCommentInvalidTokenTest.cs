@@ -12,12 +12,10 @@ namespace WebApi.Test.Comment.Update
     public class UpdateCommentInvalidTokenTest : ForumClassFixture
     {
         private const string _endpoint = "comment";
-        private readonly long _topicId;
         private readonly long _commentId;
 
         public UpdateCommentInvalidTokenTest(CustomWebApplicationFactory factory) : base(factory)
         {
-            _topicId = factory.GetTopicId();
             _commentId = factory.GetCommentId();
         }
 
@@ -27,7 +25,7 @@ namespace WebApi.Test.Comment.Update
         {
             var request = RequestTopicJsonBuilder.Build();
 
-            var response = await DoPut(endpoint: $"{_endpoint}/{_topicId}/{_commentId}", request: request, token: string.Empty, culture: culture);
+            var response = await DoPut(endpoint: $"{_endpoint}/{_commentId}", request: request, token: string.Empty, culture: culture);
 
             response.StatusCode.Should().Be(HttpStatusCode.Unauthorized);
 
@@ -48,7 +46,7 @@ namespace WebApi.Test.Comment.Update
         {
             var request = RequestTopicJsonBuilder.Build();
 
-            var response = await DoPut(endpoint: $"{_endpoint}/{_topicId}/{_commentId}", request: request, token: "invalidToken", culture: culture);
+            var response = await DoPut(endpoint: $"{_endpoint}/{_commentId}", request: request, token: "invalidToken", culture: culture);
 
             response.StatusCode.Should().Be(HttpStatusCode.Unauthorized);
 
@@ -71,7 +69,7 @@ namespace WebApi.Test.Comment.Update
 
             var token = AccessTokenGeneratorBuilder.Build().Generate(Guid.NewGuid());
 
-            var response = await DoPut(endpoint: $"{_endpoint}/{_topicId}/{_commentId}", request: request, token: token, culture: culture);
+            var response = await DoPut(endpoint: $"{_endpoint}/{_commentId}", request: request, token: token, culture: culture);
 
             response.StatusCode.Should().Be(HttpStatusCode.Unauthorized);
 

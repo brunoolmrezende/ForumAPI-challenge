@@ -18,11 +18,11 @@ namespace Forum.Infrastructure.DataAccess.Repositories
             _dbContext.Comments.Remove(comment);
         }
 
-        public async Task<Comment?> GetById(long id, long loggedUserId, long topicId)
+        public async Task<Comment?> GetById(long id, long loggedUserId)
         {
             return await _dbContext
                 .Comments
-                .FirstOrDefaultAsync(comment => comment.Id.Equals(id) && comment.UserId.Equals(loggedUserId) && comment.TopicId.Equals(topicId) && comment.Active);
+                .FirstOrDefaultAsync(comment => comment.Id.Equals(id) && comment.UserId.Equals(loggedUserId) && comment.Active);
         }
 
         public void Update(Comment comment)

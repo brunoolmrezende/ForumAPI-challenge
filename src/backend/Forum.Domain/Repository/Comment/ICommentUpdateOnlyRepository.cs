@@ -2,7 +2,7 @@
 {
     public interface ICommentUpdateOnlyRepository
     {
-        Task<Entities.Comment?> GetById(long commentId, long loggedUserId, long topicId);
+        Task<Entities.Comment?> GetById(long commentId, long loggedUserId);
         void Update(Entities.Comment comment);
     }
 }

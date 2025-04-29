@@ -14,12 +14,11 @@ namespace CommonTestUtilities.Repositories
 
         public CommentUpdateOnlyRepositoryBuilder GetById(
             Forum.Domain.Entities.Comment? comment,
-            Forum.Domain.Entities.Topic? topic,
             long loggedUserId)
         {
-            if (comment is not null && topic is not null)
+            if (comment is not null)
             {
-                _mock.Setup(x => x.GetById(comment.Id, loggedUserId, topic.Id)).ReturnsAsync(comment);
+                _mock.Setup(x => x.GetById(comment.Id, loggedUserId)).ReturnsAsync(comment);
             }
 
             return this;
