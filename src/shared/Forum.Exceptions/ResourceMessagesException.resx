@@ -188,4 +188,7 @@
   <data name="USER_DOES_NOT_HAVE_PHOTO" xml:space="preserve">
     <value>The user does not have a photo to remove.</value>
   </data>
+  <data name="TOO_MANY_REQUESTS" xml:space="preserve">
+    <value>The maximum number of allowed requests has been reached. Please wait before trying again.</value>
+  </data>
 </root>

@@ -234,6 +234,15 @@ namespace Forum.Exceptions {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to The maximum number of allowed requests has been reached. Please wait before trying again..
+        /// </summary>
+        public static string TOO_MANY_REQUESTS {
+            get {
+                return ResourceManager.GetString("TOO_MANY_REQUESTS", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to The topic could not be found..
         /// </summary>
         public static string TOPIC_NOT_FOUND {

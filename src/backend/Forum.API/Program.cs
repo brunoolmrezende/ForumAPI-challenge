@@ -2,6 +2,7 @@ using Forum.API.BackgroundServices;
 using Forum.API.Converters;
 using Forum.API.Filters;
 using Forum.API.Middleware;
+using Forum.API.RateLimit;
 using Forum.API.Token;
 using Forum.Application;
 using Forum.Domain.Security.AccessToken;
@@ -13,6 +14,8 @@ using Microsoft.OpenApi.Models;
 const string AUTHENTICATION_TYPE = "Bearer";
 
 var builder = WebApplication.CreateBuilder(args);
+
+builder.Services.AddRateLimiter(options => options.AddPolicy<string, RateLimiterPolicy>("RateLimiterPolicy"));
 
 // Add services to the container.
 
@@ -92,6 +95,7 @@ app.UseMiddleware<CultureMiddleware>();
 app.UseHttpsRedirection();
 
 app.UseAuthorization();
+app.UseRateLimiter();
 
 app.MapControllers();
 
