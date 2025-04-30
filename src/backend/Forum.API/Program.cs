@@ -28,6 +28,12 @@ builder.Services.AddControllers()
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen(options =>
 {
+    options.SwaggerDoc("v1", new OpenApiInfo
+    {
+        Title = "ForumAPI",
+        Version = "1.0",
+    });
+
     options.AddSecurityDefinition(AUTHENTICATION_TYPE, new OpenApiSecurityScheme
     {
         Description = @"JWT Authorization header using the Bearer scheme.
@@ -50,8 +56,8 @@ builder.Services.AddSwaggerGen(options =>
                     Type = ReferenceType.SecurityScheme,
                     Id = AUTHENTICATION_TYPE
                 },
-                Scheme = "oauth2",
-                Name = AUTHENTICATION_TYPE,
+                Scheme = AUTHENTICATION_TYPE,
+                Name = "Authorization",
                 In = ParameterLocation.Header
             },
             new List<string>()
