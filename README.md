@@ -58,6 +58,8 @@ Para que o recurso funcione corretamente, é necessário configurar as seguintes
 }
 ```
 
+---
+
 ## 🛡️ Trilhas de Auditoria
 
 O projeto implementa um sistema de trilha de auditoria automática através da sobreposição do método SaveChangesAsync no DbContext.
@@ -74,6 +76,15 @@ Sempre que uma entidade for criada, atualizada ou removida, um registro de audit
 - Lista de alterações nos campos (AuditEntry);
 
 Essa abordagem proporciona rastreabilidade completa das modificações no sistema, mantendo a separação de responsabilidades entre as camadas e eliminando a necessidade de código repetitivo de auditoria nos casos de uso.
+
+---
+
+## 🚦 Controle de Requisições com Rate Limiting
+O projeto implementa um mecanismo de rate limiting para limitar a quantidade de requisições por IP em um determinado intervalo de tempo, utilizando a API nativa de Rate Limiting do .NET.
+
+A política de rate limit é flexível: em ambientes de teste, ela é automaticamente desativada para não interferir na execução de testes automatizados.
+
+A configuração da política é realizada via implementação de IRateLimiterPolicy, que pode ser aplicada diretamente em controladores ou endpoints por meio do atributo [EnableRateLimiting("PolicyName")].
 
 ---
 
