@@ -7,5 +7,7 @@
         public string? AuthorPhotoUrl { get; set; } = string.Empty;
         public string Content { get; set; } = string.Empty;
         public DateTime CreatedOn { get; set; }
+        public int TotalLikes { get; set; }
+        public bool LikedByCurrentUser { get; set; }
     }
 }

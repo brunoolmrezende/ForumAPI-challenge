@@ -29,8 +29,20 @@ namespace Forum.Application.UseCases.Topic.GetById
 
             var loggedUser = await _loggedUser.TryGetUser();
 
-            topicDetails.LikedByCurrentUser = loggedUser is not null
-                    && topic.Likes.Any(like => like.UserId.Equals(loggedUser.Id));
+            if (loggedUser is not null)
+            {
+                topicDetails.LikedByCurrentUser = topic.Likes.Any(like => like.UserId.Equals(loggedUser.Id));
+
+                var commentsById = topic.Comments.ToDictionary(c => c.Id, c => c);
+
+                foreach (var comment in topicDetails.Comments)
+                {
+                    if (commentsById.TryGetValue(comment.Id, out var commentEntity))
+                    {
+                        comment.LikedByCurrentUser = commentEntity.Likes.Any(like => like.UserId.Equals(loggedUser.Id));
+                    }
+                }
+            }
 
             return topicDetails;
         }

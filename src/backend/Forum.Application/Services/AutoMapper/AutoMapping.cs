@@ -29,7 +29,8 @@ namespace Forum.Application.Services.AutoMapper
 
             CreateMap<Comment, ResponseCommentJson>()
                 .ForMember(dest => dest.Author, opt => opt.MapFrom(src => src.User.Name))
-                .ForMember(dest => dest.AuthorPhotoUrl, opt => opt.MapFrom(src => src.User.ImageUrl));
+                .ForMember(dest => dest.AuthorPhotoUrl, opt => opt.MapFrom(src => src.User.ImageUrl))
+                .ForMember(dest => dest.TotalLikes, opt => opt.MapFrom(src => src.Likes.Count));
 
             CreateMap<User, ResponseUserSummaryJson>();
 

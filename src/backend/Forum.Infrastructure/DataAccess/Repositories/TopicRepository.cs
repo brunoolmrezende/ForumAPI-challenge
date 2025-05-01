@@ -90,7 +90,7 @@ namespace Forum.Infrastructure.DataAccess.Repositories
             return await query.ToListAsync();
         }
 
-        private IIncludableQueryable<Topic, User> GetFullTopic()
+        private IIncludableQueryable<Topic, List<CommentLike>> GetFullTopic()
         {
             return _dbContext
                 .Topics
@@ -98,7 +98,9 @@ namespace Forum.Infrastructure.DataAccess.Repositories
                 .Include(topic => topic.User)
                 .Include(topic => topic.Likes)
                 .Include(topic => topic.Comments)
-                .ThenInclude(c => c.User);
+                    .ThenInclude(comment => comment.User)
+                .Include(topic => topic.Comments)
+                    .ThenInclude(comment => comment.Likes);
         }
     }
 }
