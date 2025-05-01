@@ -12,11 +12,13 @@ namespace CommonTestUtilities.Repositories
             _mock = new Mock<ITopicLikeUpdateOnlyRepository>();
         }
 
-        public TopicLikeUpdateOnlyRepositoryBuilder GetById(Forum.Domain.Entities.TopicLike? topicLike)
+        public TopicLikeUpdateOnlyRepositoryBuilder GetById(
+            Forum.Domain.Entities.User user,
+            Forum.Domain.Entities.TopicLike? topicLike)
         {
             if (topicLike is not null)
             {
-                _mock.Setup(repository => repository.GetById(topicLike.UserId, topicLike.TopicId)).ReturnsAsync(topicLike);
+                _mock.Setup(repository => repository.GetById(user.Id, topicLike.TopicId)).ReturnsAsync(topicLike);
             }
 
             return this;

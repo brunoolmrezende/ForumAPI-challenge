@@ -8,7 +8,7 @@ using Forum.Exceptions.ExceptionBase;
 
 namespace UseCases.Test.Like.ToggleLike
 {
-    public class ToggleLikeUseCaseTest
+    public class ToggleTopicLikeUseCaseTest
     {
         [Fact]
         public async Task Success_Like()
@@ -61,7 +61,7 @@ namespace UseCases.Test.Like.ToggleLike
         {
             var loggedUser = LoggedUserBuilder.Build(user);
             var topicReadOnlyRepository = new TopicReadOnlyRepositoryBuilder().ExistsById(topic).Build();
-            var topicLikeUpdateOnlyRepository = new TopicLikeUpdateOnlyRepositoryBuilder().GetById(topicLike).Build();
+            var topicLikeUpdateOnlyRepository = new TopicLikeUpdateOnlyRepositoryBuilder().GetById(user, topicLike).Build();
             var topicLikeWriteOnlyRepository = TopicLikeWriteOnlyRepositoryBuilder.Build();
             var unitOfWork = UnitOfWorkBuilder.Build();
 
