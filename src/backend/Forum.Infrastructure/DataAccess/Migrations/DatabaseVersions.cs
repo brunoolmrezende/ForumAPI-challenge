@@ -10,5 +10,6 @@
         public const int IMAGES_FOR_USERS = 6;
         public const int TABLE_AUDITS = 7;
         public const int TABLE_AUDIT_ENTRIES = 8;
+        public const int TABLE_COMMENT_LIKES = 9;
     }
 }

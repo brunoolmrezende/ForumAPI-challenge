@@ -8,5 +8,6 @@
 
         public Topic Topic { get; set; } = default!;
         public User User { get; set; } = default!;
+        public List<CommentLike> Likes { get; set; } = [];
     }
 }
