@@ -13,6 +13,7 @@ namespace Forum.Infrastructure.DataAccess
         public DbSet<Topic> Topics { get; set; }
         public DbSet<Comment> Comments { get; set; }
         public DbSet<TopicLike> TopicLikes { get; set; }
+        public DbSet<CommentLike> CommentLikes { get; set; }
         public DbSet<RefreshToken> RefreshTokens { get; set; }
         public DbSet<Audit> Audits { get; set; }
         public DbSet<AuditEntry> AuditEntries { get; set; }
