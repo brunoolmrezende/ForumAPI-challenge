@@ -91,6 +91,7 @@ namespace Forum.Infrastructure
 
             services.AddScoped<ICommentWriteOnlyRepository, CommentRepository>();
             services.AddScoped<ICommentUpdateOnlyRepository, CommentRepository>();
+            services.AddScoped<ICommentReadOnlyRepository, CommentRepository>();
 
             services.AddScoped<ITopicLikeUpdateOnlyRepository, TopicLikeRepository>();
             services.AddScoped<ITopicLikeWriteOnlyRepository, TopicLikeRepository>();

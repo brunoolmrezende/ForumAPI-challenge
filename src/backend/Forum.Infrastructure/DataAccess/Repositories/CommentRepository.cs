@@ -4,7 +4,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Forum.Infrastructure.DataAccess.Repositories
 {
-    public class CommentRepository(ForumDbContext dbContext) : ICommentWriteOnlyRepository, ICommentUpdateOnlyRepository
+    public class CommentRepository(ForumDbContext dbContext) : ICommentWriteOnlyRepository, ICommentUpdateOnlyRepository, ICommentReadOnlyRepository
     {
         private readonly ForumDbContext _dbContext = dbContext;
 
@@ -16,6 +16,14 @@ namespace Forum.Infrastructure.DataAccess.Repositories
         public void Delete(Comment comment)
         {
             _dbContext.Comments.Remove(comment);
+        }
+
+        public async Task<bool> ExistsById(long commentId)
+        {
+            return await _dbContext
+                .Comments
+                .AsNoTracking()
+                .AnyAsync(comment => comment.Id.Equals(commentId) && comment.Active);
         }
 
         public async Task<Comment?> GetById(long id, long loggedUserId)
