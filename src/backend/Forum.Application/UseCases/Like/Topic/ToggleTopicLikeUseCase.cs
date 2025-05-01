@@ -1,5 +1,4 @@
-﻿
-using Forum.Domain.Entities;
+﻿using Forum.Domain.Entities;
 using Forum.Domain.Repository;
 using Forum.Domain.Repository.Like.TopicLike;
 using Forum.Domain.Repository.Topic;
@@ -7,14 +6,14 @@ using Forum.Domain.Services;
 using Forum.Exceptions;
 using Forum.Exceptions.ExceptionBase;
 
-namespace Forum.Application.UseCases.Like
+namespace Forum.Application.UseCases.Like.Topic
 {
-    public class ToggleLikeUseCase(
+    public class ToggleTopicLikeUseCase(
         ILoggedUser loggedUser,
         ITopicReadOnlyRepository topicReadOnlyRepository,
         ITopicLikeUpdateOnlyRepository topicLikeUpdateOnlyRepository,
         ITopicLikeWriteOnlyRepository topicLikeWriteOnlyRepository,
-        IUnitOfWork unitOfWork) : IToggleLikeUseCase
+        IUnitOfWork unitOfWork) : IToggleTopicLikeUseCase
     {
         private readonly ILoggedUser _loggedUser = loggedUser;
         private readonly ITopicReadOnlyRepository _topicReadOnlyRepository = topicReadOnlyRepository;

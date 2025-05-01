@@ -6,15 +6,15 @@ using System.Net;
 using System.Text.Json;
 using WebApi.Test.InlineData;
 
-namespace WebApi.Test.Like
+namespace WebApi.Test.Like.Topic
 {
-    public class ToggleLikeTest : ForumClassFixture
+    public class ToggleTopicLikeTest : ForumClassFixture
     {
-        private const string _endpoint = "like";
+        private const string _endpoint = "like/topic";
         private readonly long _topicId;
         private readonly Guid _identifier;
 
-        public ToggleLikeTest(CustomWebApplicationFactory factory) : base(factory)
+        public ToggleTopicLikeTest(CustomWebApplicationFactory factory) : base(factory)
         {
             _topicId = factory.GetTopicId();
             _identifier = factory.GetIdentifier();

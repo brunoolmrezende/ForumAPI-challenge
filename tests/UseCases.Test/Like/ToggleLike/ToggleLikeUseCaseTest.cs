@@ -2,7 +2,7 @@
 using CommonTestUtilities.LoggedUser;
 using CommonTestUtilities.Repositories;
 using FluentAssertions;
-using Forum.Application.UseCases.Like;
+using Forum.Application.UseCases.Like.Topic;
 using Forum.Exceptions;
 using Forum.Exceptions.ExceptionBase;
 
@@ -54,7 +54,7 @@ namespace UseCases.Test.Like.ToggleLike
                     && error.GetErrorMessage().Contains(ResourceMessagesException.TOPIC_NOT_FOUND));
         }
 
-        private static ToggleLikeUseCase CreateUseCase(
+        private static ToggleTopicLikeUseCase CreateUseCase(
             Forum.Domain.Entities.User user,
             Forum.Domain.Entities.Topic? topic = null,
             Forum.Domain.Entities.TopicLike? topicLike = null)
@@ -65,7 +65,7 @@ namespace UseCases.Test.Like.ToggleLike
             var topicLikeWriteOnlyRepository = TopicLikeWriteOnlyRepositoryBuilder.Build();
             var unitOfWork = UnitOfWorkBuilder.Build();
 
-            return new ToggleLikeUseCase(loggedUser, topicReadOnlyRepository, topicLikeUpdateOnlyRepository, topicLikeWriteOnlyRepository, unitOfWork);
+            return new ToggleTopicLikeUseCase(loggedUser, topicReadOnlyRepository, topicLikeUpdateOnlyRepository, topicLikeWriteOnlyRepository, unitOfWork);
         }
     }
 }

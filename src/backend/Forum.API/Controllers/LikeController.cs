@@ -9,11 +9,11 @@ namespace Forum.API.Controllers
     public class LikeController : ForumControllerBase
     {
         [HttpPost]
-        [Route("{topicId}")]
+        [Route("topic/{topicId}")]
         [ProducesResponseType(StatusCodes.Status204NoContent)]
         [ProducesResponseType(typeof(ResponseErrorJson), StatusCodes.Status404NotFound)]
         public async Task<IActionResult> ToggleLike(
-            [FromServices] IToggleLikeUseCase useCase,
+            [FromServices] IToggleTopicLikeUseCase useCase,
             [FromRoute] long topicId)
         {
             await useCase.Execute(topicId);

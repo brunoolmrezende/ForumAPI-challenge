@@ -5,6 +5,7 @@ using Forum.Application.UseCases.Comment.Register;
 using Forum.Application.UseCases.Comment.Update;
 using Forum.Application.UseCases.Forum;
 using Forum.Application.UseCases.Like;
+using Forum.Application.UseCases.Like.Topic;
 using Forum.Application.UseCases.Login.DoLogin;
 using Forum.Application.UseCases.Token;
 using Forum.Application.UseCases.Topic.Delete;
@@ -58,7 +59,7 @@ namespace Forum.Application
             services.AddScoped<IUpdateCommentUseCase, UpdateCommentUseCase>();
             services.AddScoped<IDeleteCommentUseCase, DeleteCommentUseCase>();
 
-            services.AddScoped<IToggleLikeUseCase, ToggleLikeUseCase>();
+            services.AddScoped<IToggleTopicLikeUseCase, ToggleTopicLikeUseCase>();
         }
 
         private static void AddAutoMapper(this IServiceCollection services)
