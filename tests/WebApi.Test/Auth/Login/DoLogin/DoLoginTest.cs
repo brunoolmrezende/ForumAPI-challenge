@@ -7,11 +7,11 @@ using System.Net;
 using System.Text.Json;
 using WebApi.Test.InlineData;
 
-namespace WebApi.Test.Login.DoLogin
+namespace WebApi.Test.Auth.Login.DoLogin
 {
     public class DoLoginTest : ForumClassFixture
     {
-        private const string _endpoint = "login";
+        private const string _endpoint = "auth/login";
 
         private readonly string _email;
         private readonly string _name;

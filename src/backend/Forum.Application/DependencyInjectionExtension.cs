@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using Forum.Application.Services.AutoMapper;
+using Forum.Application.UseCases.Auth.Login.DoLogin;
 using Forum.Application.UseCases.Comment.Delete;
 using Forum.Application.UseCases.Comment.Register;
 using Forum.Application.UseCases.Comment.Update;

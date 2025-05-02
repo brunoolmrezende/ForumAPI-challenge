@@ -9,7 +9,7 @@ using Forum.Domain.Security.Cryptography;
 using Forum.Domain.Security.RefreshToken;
 using Forum.Exceptions.ExceptionBase;
 
-namespace Forum.Application.UseCases.Login.DoLogin
+namespace Forum.Application.UseCases.Auth.Login.DoLogin
 {
     public class DoLoginUseCase(
         IUserReadOnlyRepository readOnlyRepository,

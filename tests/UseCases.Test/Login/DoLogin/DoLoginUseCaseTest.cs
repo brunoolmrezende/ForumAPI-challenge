@@ -4,7 +4,7 @@ using CommonTestUtilities.Repositories;
 using CommonTestUtilities.Requests;
 using CommonTestUtilities.Tokens;
 using FluentAssertions;
-using Forum.Application.UseCases.Login.DoLogin;
+using Forum.Application.UseCases.Auth.Login.DoLogin;
 using Forum.Communication.Request;
 using Forum.Exceptions;
 using Forum.Exceptions.ExceptionBase;

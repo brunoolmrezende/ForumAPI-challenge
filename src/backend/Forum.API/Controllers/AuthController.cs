@@ -1,13 +1,15 @@
-﻿using Forum.Application.UseCases.Login.DoLogin;
+﻿using Forum.Application.UseCases.Auth.ForgotPassword;
+using Forum.Application.UseCases.Auth.Login.DoLogin;
 using Forum.Communication.Request;
 using Forum.Communication.Response;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Forum.API.Controllers
 {
-    public class LoginController : ForumControllerBase
+    public class AuthController : ForumControllerBase
     {
         [HttpPost]
+        [Route("login")]
         [ProducesResponseType(typeof(ResponseRegisteredUserJson), StatusCodes.Status200OK)]
         [ProducesResponseType(typeof(ResponseErrorJson), StatusCodes.Status401Unauthorized)]
         public async Task<IActionResult> DoLogin(
