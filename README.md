@@ -104,7 +104,8 @@ A configuração da política é realizada via implementação de IRateLimiterPo
 - `POST /comment/{topicId}` — Criar comentário
 - `PUT /comment/{commentId}` — Atualizar comentário (somente autor)
 - `DELETE /comment/{commentId}` — Deletar comentário (somente autor)
-- `POST /like/{topicId}` — Curtir/descurtir tópico
+- `POST /like/topic/{topicId}` — Curtir/descurtir tópico
+- `POST /like/comment/{commentId}` — Curtir/descurtir comentário
 
 ### ✅ Acesso público
 
