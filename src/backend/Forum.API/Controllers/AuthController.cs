@@ -20,5 +20,19 @@ namespace Forum.API.Controllers
 
             return Ok(response);
         }
+
+        [HttpPost]
+        [Route("forgot-password")]
+        [ProducesResponseType(typeof(ResponseMessageJson), StatusCodes.Status202Accepted)]
+        public async Task<IActionResult> ForgotPassword(
+            [FromServices] IForgotPasswordUseCase useCase,
+            [FromBody] RequestForgotPasswordJson request)
+        {
+            var response = await useCase.Execute(request);
+
+            return Accepted(response);
+        }
+            return Ok(response);
+        }
     }
 }

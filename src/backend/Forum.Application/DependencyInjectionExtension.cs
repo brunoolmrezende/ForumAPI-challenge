@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using Forum.Application.Services.AutoMapper;
+using Forum.Application.UseCases.Auth.ForgotPassword;
 using Forum.Application.UseCases.Auth.Login.DoLogin;
 using Forum.Application.UseCases.Comment.Delete;
 using Forum.Application.UseCases.Comment.Register;
@@ -47,6 +48,7 @@ namespace Forum.Application
 
             services.AddScoped<IUseRefreshTokenUseCase, UseRerfreshTokenUseCase>();
 
+            services.AddScoped<IForgotPasswordUseCase, ForgotPasswordUseCase>();
             services.AddScoped<IDoLoginUseCase, DoLoginUseCase>();
 
             services.AddScoped<IRegisterTopicUseCase, RegisterTopicUseCase>();
