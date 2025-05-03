@@ -88,6 +88,18 @@ A configuração da política é realizada via implementação de IRateLimiterPo
 
 ---
 
+## 🔐 Recuperação de Senha por Código
+
+A API oferece suporte à recuperação de senha em duas etapas:
+
+- `POST /auth/forgot-password` — Solicita o envio de um código de verificação para o e-mail informado, caso esteja associado a um usuário válido. O código possui tempo de expiração configurado.
+
+- `POST /auth/reset-password` — Permite redefinir a senha utilizando o código recebido por e-mail, o e-mail e a nova senha. A operação valida a existência e validade do código antes de atualizar a senha do usuário, que é armazenada de forma criptografada.
+
+O fluxo foi projetado seguindo boas práticas de segurança e evita exposição de informações sensíveis.
+
+---
+
 ## 📚 Endpoints Disponíveis
 
 ### 🔐 Autenticação necessária
@@ -109,7 +121,9 @@ A configuração da política é realizada via implementação de IRateLimiterPo
 
 ### ✅ Acesso público
 
-- `POST /login` — Autenticação do usuário
+- `POST /auth/login` — Autenticação do usuário
+- `POST /auth/forgot-password` — Solicitação de redefinição de senha por e-mail, com envio de código de verificação.
+- `POST /auth/reset-password` — Redefinição da senha do usuário utilizando o código enviado por e-mail.
 - `POST /user` — Criar novo usuário
 - `GET /forum` — Listar todos os tópicos com detalhes completos
 - `GET /topic/{id}` — Obter um tópico específico com seus comentários
