@@ -16,6 +16,8 @@ namespace WebApi.Test
         private Forum.Domain.Entities.Comment _comment = default!;
         private Forum.Domain.Entities.TopicLike _topicLike = default!;
         private Forum.Domain.Entities.RefreshToken _refreshToken = default!;
+        private Forum.Domain.Entities.ResetPasswordCode _resetPasswordCode = default!;
+        private Forum.Domain.Entities.ResetPasswordCode _expiredResetPasswordCode = default!;
         private string _password = string.Empty;
 
         protected override void ConfigureWebHost(IWebHostBuilder builder)
@@ -66,6 +68,8 @@ namespace WebApi.Test
         public long GetCommentId() => _comment.Id;
 
         public string GetRefreshToken() => _refreshToken.Value;
+        public string GetResetPasswordCode() => _resetPasswordCode.Value;
+        public string GetExpiredResetPasswordCode() => _expiredResetPasswordCode.Value;
 
         private void StartDatabase(ForumDbContext dbContext)
         {
@@ -84,6 +88,12 @@ namespace WebApi.Test
 
             _refreshToken = RefreshTokenBuilder.Build(_user);
 
+            _resetPasswordCode = ResetPasswordCodeBuilder.Build(_user.Email);
+
+            _expiredResetPasswordCode = ResetPasswordCodeBuilder.Build(_user.Email);
+            _expiredResetPasswordCode.Id = 2;
+            _expiredResetPasswordCode.CreatedOn = DateTime.UtcNow.AddDays(-1);
+
             dbContext.Database.EnsureCreated();
             dbContext.Users.Add(_user);
             dbContext.Users.Add(_userWithoutPhoto);
@@ -91,6 +101,8 @@ namespace WebApi.Test
             dbContext.Comments.Add(_comment);
             dbContext.TopicLikes.Add(_topicLike);
             dbContext.RefreshTokens.Add(_refreshToken);
+            dbContext.ResetPasswordCodes.Add(_resetPasswordCode);
+            dbContext.ResetPasswordCodes.Add(_expiredResetPasswordCode);
             dbContext.SaveChanges();
         }
     }

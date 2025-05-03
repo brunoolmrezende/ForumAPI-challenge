@@ -16,7 +16,17 @@ namespace CommonTestUtilities.Repositories
 
             return this;
         }
- 
+
+        public UserUpdateOnlyRepositoryBuilder GetByEmail(Forum.Domain.Entities.User? user = null)
+        {
+            if (user is not null)
+            {
+                _mock.Setup(repository => repository.GetByEmail(user.Email)).ReturnsAsync(user);
+            }
+
+            return this;
+        }
+
         public IUserUpdateOnlyRepository Build() => _mock.Object;
     }
 }
