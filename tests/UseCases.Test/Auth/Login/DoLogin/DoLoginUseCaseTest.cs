@@ -10,7 +10,7 @@ using Forum.Exceptions;
 using Forum.Exceptions.ExceptionBase;
 
 
-namespace UseCases.Test.Login.DoLogin
+namespace UseCases.Test.Auth.Login.DoLogin
 {
     public class DoLoginUseCaseTest
     {
