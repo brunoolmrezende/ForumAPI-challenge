@@ -17,6 +17,7 @@ namespace Forum.Infrastructure.DataAccess
         public DbSet<RefreshToken> RefreshTokens { get; set; }
         public DbSet<Audit> Audits { get; set; }
         public DbSet<AuditEntry> AuditEntries { get; set; }
+        public DbSet<ResetPasswordCode> ResetPasswordCodes { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {

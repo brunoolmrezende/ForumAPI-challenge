@@ -2,7 +2,7 @@
 
 namespace Forum.Infrastructure.DataAccess.Migrations.Versions
 {
-    [Migration(DatabaseVersions.TABLE_REFRESH_TOKENS, "Create table ro save refresh tokens")]
+    [Migration(DatabaseVersions.TABLE_REFRESH_TOKENS, "Create table to save refresh tokens")]
     public class Version0000005 : VersionBase
     {
         public override void Up()

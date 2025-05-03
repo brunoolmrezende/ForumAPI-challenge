@@ -11,5 +11,6 @@
         public const int TABLE_AUDITS = 7;
         public const int TABLE_AUDIT_ENTRIES = 8;
         public const int TABLE_COMMENT_LIKES = 9;
+        public const int TABLE_RESET_PASSWORD_CODES = 10;
     }
 }
