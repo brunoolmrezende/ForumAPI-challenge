@@ -4,12 +4,14 @@ using Forum.Domain.Repository;
 using Forum.Domain.Repository.Comment;
 using Forum.Domain.Repository.Like.CommentLike;
 using Forum.Domain.Repository.Like.TopicLike;
+using Forum.Domain.Repository.ResetPasswordCode;
 using Forum.Domain.Repository.Token;
 using Forum.Domain.Repository.Topic;
 using Forum.Domain.Repository.User;
 using Forum.Domain.Security.AccessToken;
 using Forum.Domain.Security.Cryptography;
 using Forum.Domain.Security.RefreshToken;
+using Forum.Domain.Security.ResetPasswordCode;
 using Forum.Domain.Services;
 using Forum.Infrastructure.DataAccess;
 using Forum.Infrastructure.DataAccess.Repositories;
@@ -17,7 +19,9 @@ using Forum.Infrastructure.Extensions;
 using Forum.Infrastructure.Security.AccessToken;
 using Forum.Infrastructure.Security.Cryptography;
 using Forum.Infrastructure.Security.RefreshToken;
+using Forum.Infrastructure.Security.ResetPasswordCode;
 using Forum.Infrastructure.Services.DeleteUserQueue;
+using Forum.Infrastructure.Services.Email;
 using Forum.Infrastructure.Services.LoggedUser;
 using Forum.Infrastructure.Services.Photo;
 using Microsoft.EntityFrameworkCore;
@@ -36,6 +40,7 @@ namespace Forum.Infrastructure
             AddTokens(services, configuration);
             AddLoggedUser(services);
             AddQueue(services, configuration);
+            AddSendResetPasswordCodeMail(services, configuration);
 
             if (configuration.IsUnitTestEnviroment())
             {
@@ -101,6 +106,8 @@ namespace Forum.Infrastructure
 
             services.AddScoped<ITokenRepository, TokenRepository>();
 
+            services.AddScoped<IResetPasswordCodeRepository, ResetPasswordCodeRepository>();
+
             services.AddScoped<IUnitOfWork, UnitOfWork>();
         }
 
@@ -118,6 +125,8 @@ namespace Forum.Infrastructure
             services.AddScoped<IAccessTokenValidator>(options => new AccessTokenValidator(signinKey));
 
             services.AddScoped<IRefreshTokenGenerator, RefreshTokenGenerator>();
+
+            services.AddScoped<IResetPasswordCodeGenerator, ResetPasswordCodeGenerator>();
         }
 
         private static void AddLoggedUser(IServiceCollection services)
@@ -146,6 +155,20 @@ namespace Forum.Infrastructure
             var queueName = configuration.GetValue<string>("Settings:RabbitMQ:QueueName")!;
 
             services.AddScoped<IDeleteUserQueue>(options => new DeleteUserQueue(connection, queueName));
+        }
+
+        private static void AddSendResetPasswordCodeMail(this IServiceCollection services, IConfiguration configuration)
+        {
+            var credentialUser = configuration.GetValue<string>("Settings:SendGrid:CredentialUser");
+            var credentialPassword = configuration.GetValue<string>("Settings:SendGrid:CredentialPassword");
+            var address = configuration.GetValue<string>("Settings:EmailCredentials:Address");
+            var displayName = configuration.GetValue<string>("Settings:EmailCredentials:DisplayName");
+            var host = configuration.GetValue<string>("Settings:SendGrid:Host");
+            var port = configuration.GetValue<int>("Settings:SendGrid:Port");
+
+
+            services.AddScoped<IResetPasswordCodeSendEmail>(options => new ResetPasswordCodeSendEmail(
+                credentialUser!, credentialPassword!, address!, displayName!, host!, port));
         }
 
         private static void AddFluentMigrator_SqlServer(IServiceCollection services, IConfiguration configuration)

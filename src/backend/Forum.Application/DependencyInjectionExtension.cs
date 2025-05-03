@@ -2,13 +2,13 @@
 using Forum.Application.Services.AutoMapper;
 using Forum.Application.UseCases.Auth.ForgotPassword;
 using Forum.Application.UseCases.Auth.Login.DoLogin;
+using Forum.Application.UseCases.Auth.ResetPassword;
 using Forum.Application.UseCases.Comment.Delete;
 using Forum.Application.UseCases.Comment.Register;
 using Forum.Application.UseCases.Comment.Update;
 using Forum.Application.UseCases.Forum;
 using Forum.Application.UseCases.Like.Comment;
 using Forum.Application.UseCases.Like.Topic;
-using Forum.Application.UseCases.Login.DoLogin;
 using Forum.Application.UseCases.Token;
 using Forum.Application.UseCases.Topic.Delete;
 using Forum.Application.UseCases.Topic.Filter;
@@ -49,6 +49,8 @@ namespace Forum.Application
             services.AddScoped<IUseRefreshTokenUseCase, UseRerfreshTokenUseCase>();
 
             services.AddScoped<IForgotPasswordUseCase, ForgotPasswordUseCase>();
+            services.AddScoped<IResetPasswordUseCase, ResetPasswordUseCase>();
+
             services.AddScoped<IDoLoginUseCase, DoLoginUseCase>();
 
             services.AddScoped<IRegisterTopicUseCase, RegisterTopicUseCase>();

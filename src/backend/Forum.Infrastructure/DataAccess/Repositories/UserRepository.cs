@@ -17,7 +17,7 @@ namespace Forum.Infrastructure.DataAccess.Repositories
         {
             var user = await _dbContext.Users.FirstAsync(user => user.UserIdentifier.Equals(userIdentifier));
 
-            DeleteRelatedData(user.Id);
+            DeleteRelatedData(user.Id, user.Email);
 
             _dbContext.Users.Remove(user);
         }
@@ -32,9 +32,14 @@ namespace Forum.Infrastructure.DataAccess.Repositories
             return await _dbContext.Users.AnyAsync(user => user.UserIdentifier.Equals(userIdentifier) && user.Active);
         }
 
-        public async Task<User?> GetByEmail(string email)
+        async Task<User?> IUserReadOnlyRepository.GetByEmail(string email)
         {
             return await _dbContext.Users.AsNoTracking().FirstOrDefaultAsync(user => user.Email.Equals(email) && user.Active);
+        }
+
+        async Task<User?> IUserUpdateOnlyRepository.GetByEmail(string email)
+        {
+            return await _dbContext.Users.FirstOrDefaultAsync(user => user.Email.Equals(email) && user.Active);
         }
 
         public async Task<User> GetById(long id)
@@ -62,17 +67,19 @@ namespace Forum.Infrastructure.DataAccess.Repositories
             _dbContext.Users.Update(user);
         }
 
-        private void DeleteRelatedData(long userId)
+        private void DeleteRelatedData(long userId, string userEmail)
         {
             var topics = _dbContext.Topics.Where(topic => topic.UserId.Equals(userId));
             var comments = _dbContext.Comments.Where(comment => comment.UserId.Equals(userId));
             var likes = _dbContext.TopicLikes.Where(like => like.UserId.Equals(userId));
             var refreshToken = _dbContext.RefreshTokens.Where(token => token.UserId.Equals(userId));
+            var code = _dbContext.ResetPasswordCodes.Where(code => code.UserEmail.Equals(userEmail));
 
             _dbContext.Topics.RemoveRange(topics);
             _dbContext.Comments.RemoveRange(comments);
             _dbContext.TopicLikes.RemoveRange(likes);
             _dbContext.RefreshTokens.RemoveRange(refreshToken);
+            _dbContext.ResetPasswordCodes.RemoveRange(code);
         }
     }
 }

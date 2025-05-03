@@ -196,4 +196,13 @@
   <data name="TOO_MANY_REQUESTS" xml:space="preserve">
     <value>O número máximo de requisições permitidas foi atingido. Aguarde antes de tentar novamente.</value>
   </data>
+  <data name="CODE_NOT_FOUND" xml:space="preserve">
+    <value>Código inválido ou inexistente. Tente novamente.</value>
+  </data>
+  <data name="EXPIRED_CODE" xml:space="preserve">
+    <value>Seu código expirou. Solicite um novo para continuar.</value>
+  </data>
+  <data name="EMPTY_CODE" xml:space="preserve">
+    <value>A código não pode ser vazio.</value>
+  </data>
 </root>

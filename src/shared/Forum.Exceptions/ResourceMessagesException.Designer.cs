@@ -61,6 +61,15 @@ namespace Forum.Exceptions {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Invalid or nonexistent code. Please try again..
+        /// </summary>
+        public static string CODE_NOT_FOUND {
+            get {
+                return ResourceManager.GetString("CODE_NOT_FOUND", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to The comment could not be found.
         ///.
         /// </summary>
@@ -117,11 +126,29 @@ namespace Forum.Exceptions {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to The code cannot be empty..
+        /// </summary>
+        public static string EMPTY_CODE {
+            get {
+                return ResourceManager.GetString("EMPTY_CODE", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to The password cannot be empty..
         /// </summary>
         public static string EMPTY_PASSWORD {
             get {
                 return ResourceManager.GetString("EMPTY_PASSWORD", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Your code has expired. Please request a new one..
+        /// </summary>
+        public static string EXPIRED_CODE {
+            get {
+                return ResourceManager.GetString("EXPIRED_CODE", resourceCulture);
             }
         }
         

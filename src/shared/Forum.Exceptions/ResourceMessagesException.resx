@@ -191,4 +191,13 @@
   <data name="TOO_MANY_REQUESTS" xml:space="preserve">
     <value>The maximum number of allowed requests has been reached. Please wait before trying again.</value>
   </data>
+  <data name="CODE_NOT_FOUND" xml:space="preserve">
+    <value>Invalid or nonexistent code. Please try again.</value>
+  </data>
+  <data name="EXPIRED_CODE" xml:space="preserve">
+    <value>Your code has expired. Please request a new one.</value>
+  </data>
+  <data name="EMPTY_CODE" xml:space="preserve">
+    <value>The code cannot be empty.</value>
+  </data>
 </root>

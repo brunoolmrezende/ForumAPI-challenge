@@ -4,5 +4,6 @@ namespace Forum.Domain.Repository.User
     {
         void Update(Entities.User user);
         Task<Entities.User> GetById(long id);
+        Task<Entities.User?> GetByEmail(string email);
     }
 }
